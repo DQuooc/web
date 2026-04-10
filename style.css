@@ -45,16 +45,99 @@ body {
     gap: 2rem;
 }
  
-.logo {
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: -2px;
-    color: white;
+/* --- LOGO BỰ + CHỮ F1 STORE CÓ HIỆU ỨNG ĐÈN LED --- */
+:root {
+    /* --- CẤU HÌNH VỊ TRÍ --- */
+    --logo-margin-left: 60px;   /* Khoảng cách từ mép màn hình vào logo */
+    --logo-gap: 15px;         /* Khoảng cách giữa ảnh và chữ F1 Store */
+    
+    /* --- CẤU HÌNH HIỆU ỨNG --- */
+    --glow-color-white: rgba(255, 255, 255, 0.8); /* Màu sáng trắng */
+    --glow-color-red: rgba(225, 6, 0, 0.9);      /* Màu sáng đỏ F1 */
+    --hover-scale: 1.08;      /* Độ phóng to khi hover (1.0 = không phóng) */
+    --hover-rotate: -3deg;     /* Độ xoay nhẹ khi hover */
+}
+
+.header-inner {
+    max-width: 100% !important;
+    padding-left: var(--logo-margin-left) !important; 
+    padding-right: 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: flex-start;
+    height: 80px;
 }
- 
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--logo-gap);
+    height: 100%;
+    margin-left: 0; 
+    padding: 0;
+
+    /* THÊM 3 DÒNG NÀY ĐỂ GIỮ CHỮ ĐẸP */
+    text-decoration: none !important; /* Bỏ gạch chân mặc định của link */
+    color: inherit;                  /* Lấy màu trắng từ code cũ */
+    outline: none;                   /* Bỏ viền khi click vào */
+    
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Chuyển động siêu mượt */
+}
+
+.logo img {
+    height: 60px; 
+    width: 60px;
+    object-fit: cover;
+    border-radius: 12px; /* Bo góc nhẹ cho pro */
+    border: 2px solid rgba(255, 255, 255, 0.1); /* Viền mờ mặc định */
+    transition: all 0.4s ease;
+}
+
+.logo::after {
+    content: "F1 STORE";
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 2px;
+    transition: all 0.4s ease;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* Sáng nhẹ mặc định */
+}
+
+/* --- HIỆU ỨNG KHI ĐƯA CHUỘT VÀO: LÊN ĐÈN LED --- */
+.logo:hover {
+    transform: scale(var(--hover-scale)); /* Phóng to nhẹ toàn cụm */
+}
+
+.logo:hover img {
+    transform: rotate(var(--hover-rotate)); /* Xoay ảnh sư tử */
+    border-color: var(--glow-color-red); /* Viền đỏ rực */
+    /* Hiệu ứng phát sáng Neon trắng cho sư tử */
+    box-shadow: 0 0 15px var(--glow-color-white), 
+                0 0 30px var(--glow-color-white),
+                0 0 45px var(--glow-color-white);
+    filter: brightness(1.3) contrast(1.2); /* Tăng độ sáng ảnh */
+}
+
+.logo:hover::after {
+    color: var(--glow-color-red); /* Chữ chuyển màu đỏ */
+    /* Hiệu ứng phát sáng Neon đỏ cho chữ */
+    text-shadow: 0 0 10px var(--glow-color-red),
+                 0 0 20px var(--glow-color-red),
+                 0 0 30px var(--glow-color-red);
+    transform: translateX(10px); /* Chữ hơi nhích ra tạo cảm giác động */
+}
+
+/* Các thành phần khác giữ nguyên */
+.search {
+    margin-left: 40px; 
+    flex: 0 1 400px;
+}
+.nav {
+    margin-left: auto;
+}
 .search {
     flex: 1;
     max-width: 460px;

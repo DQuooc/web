@@ -150,14 +150,30 @@
                 </div>
             </nav>
 
-            <button class="mobile-menu-btn" aria-label="Menu di động">
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu di động">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </header>
 
+    <!-- MOBILE NAV DRAWER -->
+    <nav class="mobile-nav" id="mobileNav">
+        <input type="text" class="mobile-search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+        <a href="#" class="nav-link">Trang chủ</a>
+        <a href="#" class="nav-link">Sản phẩm</a>
+        <a href="#" class="nav-link">Đội đua</a>
+        <a href="#" class="nav-link">Tin tức</a>
+        <a href="#" class="nav-link">Liên hệ</a>
+    </nav>
+
     <!-- FIXED CONTAINER -->
     <div class="container">
+
+        <!-- SIDEBAR TOGGLE (mobile only) -->
+        <button id="sidebarToggle"
+            style="display:none;width:100%;padding:12px 18px;background:rgba(225,6,0,0.12);border:1px solid rgba(225,6,0,0.3);color:white;border-radius:10px;font-family:'Titillium Web',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;text-align:left;">
+            Danh mục sản phẩm ▼
+        </button>
 
         <!-- SIDEBAR -->
         <aside class="sidebar">
@@ -207,7 +223,11 @@
             <div class="sidebar-contact">
                 <h4><i class="fas fa-headset"></i> Hỗ trợ nhanh</h4>
                 <p>Hotline: <strong>0832 127 162</strong></p>
-                <p>Email: <a href="mailto:voduyquoc22022005@gmail.com">voduyquoc22022005@gmail.com</a></p>
+                <p>Email: <a
+                        href="/cdn-cgi/l/email-protection#0c7a636879757d79636f3e3e3c3e3e3c3c394c6b616d6560226f6361"><span
+                            class="__cf_email__"
+                            data-cfemail="691f060d1c10181c060a5b5b595b5b59595c290e04080005470a0604">voduyquoc22022005@gmail.com</span></a>
+                </p>
             </div>
         </aside>
 
@@ -274,7 +294,8 @@
                                 <h4>Xe đua F1® Oracle Red Bull Racing RB20</h4>
                                 <div class="price-row">
                                     <span class="price">699.000₫</span>
-                                    <button class="btn-add-cart" onclick="addToCart('Red Bull RB20', 699000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('Red Bull RB20', 699000, 'anh/lego/redbull/speed1.png')">
                                         Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -290,7 +311,8 @@
                                 <h4>Xe đua McLaren F1® Team MCL38</h4>
                                 <div class="price-row">
                                     <span class="price">699.000₫</span>
-                                    <button class="btn-add-cart" onclick="addToCart('McLAREN MCL38', 699000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('McLAREN MCL38', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltaefe7da97d921e16/77251_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
                                         Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -306,7 +328,8 @@
                                 <h4>Xe đua Mercedes-AMG F1® W15</h4>
                                 <div class="price-row">
                                     <span class="price">699.000₫</span>
-                                    <button class="btn-add-cart" onclick="addToCart('MERCEDES-AMG W15', 699000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('MERCEDES-AMG W15', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltdebbd34296f1ce78/77244_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
                                         Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -322,7 +345,8 @@
                                 <h4>Xe đua F1® Ferrari SF-24</h4>
                                 <div class="price-row">
                                     <span class="price">699.000₫</span>
-                                    <button class="btn-add-cart" onclick="addToCart('FERRARI SF-24', 699000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('FERRARI SF-24', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltd193d7c8cfbfc4cd/77242_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
                                         Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -338,7 +362,8 @@
                                 <h4>Xe đua Audi Revolut F1® Team R26</h4>
                                 <div class="price-row">
                                     <span class="price">699.000₫</span>
-                                    <button class="btn-add-cart" onclick="addToCart('AUDI R26', 699000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('AUDI R26', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltabd8d686bcca8fca/blt480f8e3525715603-77259_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
                                         Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -376,7 +401,8 @@
                                         <span class="old-price">7.750.000₫</span>
                                         <span class="price">6.200.000₫</span>
                                     </div>
-                                    <button class="btn-add-cart" onclick="addToCart('McLaren MCL39', 6200000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('McLaren MCL39', 6200000, 'https://www.lego.com/cdn/cs/set/assets/blt4d73eeeba610152c/blt94fedcc1daf48b2a-42228_boxprod_v39_en-us.png?format=webply&fit=bounds&quality=70&width=1200&height=1200&dpr=1.5')">
                                         <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
                                     </button>
                                 </div>
@@ -395,7 +421,8 @@
                                         <span class="old-price">5.000.000₫</span>
                                         <span class="price">4.250.000₫</span>
                                     </div>
-                                    <button class="btn-add-cart" onclick="addToCart('Red Bull RB20 1:8', 4250000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('Red Bull RB20 1:8', 4250000, 'https://www.lego.com/cdn/cs/set/assets/blt2847611d46bfd9e7/42206_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
                                         <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
                                     </button>
                                 </div>
@@ -410,7 +437,8 @@
                                 <h4>Xe đua F1® Oracle Red Bull Racing RB20</h4>
                                 <div class="price-row">
                                     <span class="price">699.000₫</span>
-                                    <button class="btn-add-cart" onclick="addToCart('Red Bull RB20', 699000)">
+                                    <button class="btn-add-cart"
+                                        onclick="addToCart('Red Bull RB20', 699000, 'anh/lego/redbull/speed1.png')">
                                         Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                                     </button>
                                 </div>
@@ -438,7 +466,8 @@
                         <h4>Ferrari Official Hoodie 2026</h4>
                         <div class="price-row">
                             <span class="price">1.890.000₫</span>
-                            <button class="btn-add-cart" onclick="addToCart('Ferrari Hoodie', 1890000)">
+                            <button class="btn-add-cart"
+                                onclick="addToCart('Ferrari Hoodie', 1890000, 'https://via.placeholder.com/600x420/111/fff?text=Ferrari+Hoodie')">
                                 Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                             </button>
                         </div>
@@ -453,7 +482,8 @@
                         <h4>McLaren Team Cap</h4>
                         <div class="price-row">
                             <span class="price">850.000₫</span>
-                            <button class="btn-add-cart" onclick="addToCart('McLaren Cap', 850000)">
+                            <button class="btn-add-cart"
+                                onclick="addToCart('McLaren Cap', 850000, 'https://via.placeholder.com/600x420/111/fff?text=McLaren+Cap')">
                                 Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
                             </button>
                         </div>
@@ -502,18 +532,12 @@
 
             <div class="footer-col contact-info">
                 <h4>LIÊN HỆ</h4>
-                <p><i class="fas fa-envelope"></i> voduyquoc22022005@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> <a
+                        href="mailto:voduyquoc22022005@gmail.com">voduyquoc22022005@gmail.com</a></p>
                 <p><i class="fas fa-phone"></i> 0832 127 162</p>
                 <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
             </div>
         </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2026 F1 Store Vietnam. All rights reserved. | Made with ❤️ for F1 Fans | https://github.com/DQuooc
-            </p>
         </div>
     </footer>
-
 </body>
-
-</html>

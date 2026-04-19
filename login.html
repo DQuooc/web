@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập – F1 Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Titillium Web', sans-serif;
+            background: #111;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(225, 6, 0, 0.1) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .auth-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 768px;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            transition: color 0.2s;
+        }
+
+        .back-home:hover {
+            color: #ccc;
+        }
+
+        .auth-container {
+            background: #1a1a1a;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(225, 6, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            min-height: 480px;
+        }
+
+        .auth-form-container {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            min-height: 480px;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .auth-sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .auth-sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .auth-container.right-panel-active .auth-sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .auth-container.right-panel-active .auth-sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+        }
+
+        .auth-form {
+            background: #1e1e1e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px 36px;
+            height: 100%;
+            min-height: 480px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .auth-h1 {
+            font-weight: 900;
+            margin: 0 0 10px;
+            color: #fff;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .auth-p {
+            font-size: 14px;
+            margin: 10px 0 20px;
+            color: #888;
+        }
+
+        .auth-input {
+            background: #2a2a2a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 11px 14px;
+            margin: 7px 0;
+            width: 100%;
+            border-radius: 10px;
+            outline: none;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 0.95rem;
+            color: #f0f0f0;
+            transition: border-color 0.25s, background 0.25s;
+        }
+
+        .auth-input::placeholder {
+            color: #555;
+        }
+
+        .auth-input:focus {
+            border-color: #e10600;
+            background: #333;
+        }
+
+        .auth-button {
+            border-radius: 25px;
+            border: 1px solid #e10600;
+            background: #e10600;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 11px 42px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            cursor: pointer;
+            margin-top: 14px;
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        .auth-button:hover {
+            background: #ff2222;
+            border-color: #ff2222;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(225, 6, 0, 0.45);
+        }
+
+        .auth-button:active {
+            transform: scale(0.96);
+        }
+
+        .auth-ghost {
+            background: transparent;
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .auth-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .auth-forgot {
+            color: #555;
+            font-size: 13px;
+            text-decoration: none;
+            margin: 12px 0;
+            display: block;
+            transition: color 0.2s;
+        }
+
+        .auth-forgot:hover {
+            color: #e10600;
+        }
+
+        .auth-social-text {
+            margin-top: 22px;
+            font-size: 12px;
+            color: #555;
+            position: relative;
+            width: 100%;
+        }
+
+        .auth-social-text::before,
+        .auth-social-text::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 15%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-social-text::before {
+            left: 10%;
+        }
+
+        .auth-social-text::after {
+            right: 10%;
+        }
+
+        .auth-social-container {
+            margin: 14px 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .auth-social-container a {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 7px;
+            height: 38px;
+            width: 38px;
+            color: #888;
+            text-decoration: none;
+            background: #2a2a2a;
+            transition: all 0.25s;
+        }
+
+        .auth-social-fb:hover {
+            color: #4267B2;
+            border-color: #4267B2;
+            background: rgba(66, 103, 178, 0.1);
+        }
+
+        .auth-social-gg:hover {
+            color: #db4437;
+            border-color: #db4437;
+            background: rgba(219, 68, 55, 0.1);
+        }
+
+        .auth-social-git:hover {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .auth-social-in:hover {
+            color: #0077b5;
+            border-color: #0077b5;
+            background: rgba(0, 119, 181, 0.1);
+        }
+
+        .auth-overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .auth-container.right-panel-active .auth-overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .auth-overlay {
+            background: linear-gradient(135deg, #1a0000 0%, #e10600 60%, #ff3333 100%);
+            color: #fff;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .auth-container.right-panel-active .auth-overlay {
+            transform: translateX(50%);
+        }
+
+        .auth-overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 36px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+        }
+
+        .auth-overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .auth-container.right-panel-active .auth-overlay-left {
+            transform: translateX(0);
+        }
+
+        .auth-overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .auth-container.right-panel-active .auth-overlay-right {
+            transform: translateX(20%);
+        }
+
+        @media (max-width: 560px) {
+            .auth-overlay-container {
+                display: none;
+            }
+
+            .auth-sign-in-container {
+                width: 100%;
+            }
+
+            .auth-sign-up-container {
+                width: 100%;
+            }
+
+            .auth-container.right-panel-active .auth-sign-in-container {
+                transform: translateX(-100%);
+            }
+
+            .auth-container.right-panel-active .auth-sign-up-container {
+                transform: translateX(0);
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-wrapper">
+
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Quay về trang chủ
+        </a>
+
+        <div class="auth-container" id="authContainer">
+
+            <!-- SIGN UP -->
+            <div class="auth-form-container auth-sign-up-container">
+                <form class="auth-form">
+                    <h1 class="auth-h1">Create Account</h1>
+                    <input class="auth-input" type="text" placeholder="Full Name" />
+                    <input class="auth-input" type="text" placeholder="Username" />
+                    <input class="auth-input" type="password" placeholder="Password" />
+                    <button class="auth-button" type="button">Sign Up</button>
+                    <div class="auth-social-text">or sign up with</div>
+                    <div class="auth-social-container">
+                        <a href="#" class="auth-social auth-social-fb"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="auth-social auth-social-gg"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#" class="auth-social auth-social-git"><i class="fab fa-github"></i></a>
+                        <a href="#" class="auth-social auth-social-in"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- SIGN IN -->
+            <div class="auth-form-container auth-sign-in-container">
+                <form class="auth-form">
+                    <h1 class="auth-h1">Sign In</h1>
+                    <input class="auth-input" type="text" placeholder="Username" />
+                    <input class="auth-input" type="password" placeholder="Password" />
+                    <a href="#" class="auth-forgot">Forgot your password?</a>
+                    <button class="auth-button" type="button" onclick="window.location.href='index.html'">
+                        Sign In
+                    </button>
+                    <div class="auth-social-text">or sign in with</div>
+                    <div class="auth-social-container">
+                        <a href="#" class="auth-social auth-social-fb"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="auth-social auth-social-gg"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#" class="auth-social auth-social-git"><i class="fab fa-github"></i></a>
+                        <a href="#" class="auth-social auth-social-in"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- OVERLAY -->
+            <div class="auth-overlay-container">
+                <div class="auth-overlay">
+                    <div class="auth-overlay-panel auth-overlay-left">
+                        <h1 class="auth-h1">Hello, Friend!</h1>
+                        <p class="auth-p">Start your journey with us today</p>
+                        <button class="auth-button auth-ghost" id="authSignIn">Sign In</button>
+                    </div>
+                    <div class="auth-overlay-panel auth-overlay-right">
+                        <h1 class="auth-h1">Welcome Back!</h1>
+                        <p class="auth-p">Keep connected with us please login</p>
+                        <button class="auth-button auth-ghost" id="authSignUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('authContainer');
+        document.getElementById('authSignUp').onclick = () => container.classList.add('right-panel-active');
+        document.getElementById('authSignIn').onclick = () => container.classList.remove('right-panel-active');
+    </script>
+
+</body>
+
+</html>

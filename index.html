@@ -12,96 +12,10 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    g
 </head>
 
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <div class="auth-modal" id="authModal">
-        <div class="auth-wrapper">
-            <span class="auth-close">&times;</span>
-
-
-            <div class="auth-container" id="authContainer">
-
-                <!-- SIGN UP -->
-                <div class="auth-form-container auth-sign-up-container">
-                    <form class="auth-form">
-                        <h1 class="auth-h1">Create Account</h1>
-
-                        <input class="auth-input" type="text" placeholder="Full Name" />
-                        <input class="auth-input" type="text" placeholder="Username" />
-                        <input class="auth-input" type="password" placeholder="Password" />
-
-                        <button class="auth-button" type="button">
-                            Sign Up
-                        </button>
-
-                        <div class="auth-social-text">or sign up with</div>
-
-                        <div class="auth-social-container">
-                            <a href="#" class="auth-social auth-social-fb"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="auth-social auth-social-gg"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#" class="auth-social auth-social-git"><i class="fab fa-github"></i></a>
-                            <a href="#" class="auth-social auth-social-in"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- SIGN IN -->
-                <div class="auth-form-container auth-sign-in-container">
-                    <form class="auth-form">
-                        <h1 class="auth-h1">Sign In</h1>
-
-                        <input class="auth-input" type="text" placeholder="Username" />
-                        <input class="auth-input" type="password" placeholder="Password" />
-
-                        <a href="#" class="auth-forgot">Forgot your password?</a>
-
-                        <!-- NÚT LOGIN CHUẨN -->
-                        <button class="auth-button" type="button" onclick="window.location.href='index.html'">
-                            Sign In
-                        </button>
-
-                        <div class="auth-social-text">or sign in with</div>
-
-                        <div class="auth-social-container">
-                            <a href="#" class="auth-social auth-social-fb"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="auth-social auth-social-gg"><i class="fab fa-google-plus-g"></i></a>
-                            <a href="#" class="auth-social auth-social-git"><i class="fab fa-github"></i></a>
-                            <a href="#" class="auth-social auth-social-in"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- OVERLAY -->
-                <div class="auth-overlay-container">
-                    <div class="auth-overlay">
-
-                        <div class="auth-overlay-panel auth-overlay-left">
-                            <h1 class="auth-h1">Hello, Friend!</h1>
-                            <p class="auth-p">Start your journey with us today</p>
-                            <button class="auth-button auth-ghost" id="authSignIn">
-                                Sign In
-                            </button>
-                        </div>
-
-                        <div class="auth-overlay-panel auth-overlay-right">
-                            <h1 class="auth-h1">Welcome Back!</h1>
-                            <p class="auth-p">Keep connected with us please login</p>
-                            <button class="auth-button auth-ghost" id="authSignUp">
-                                Sign Up
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-    </div>
 
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
@@ -124,6 +38,20 @@
 
     <div class="cart-overlay" id="cartOverlay"></div>
 
+    <!-- WISHLIST PANEL -->
+    <div class="wishlist-panel" id="wishlistPanel">
+        <div class="wishlist-header">
+            <h3><i class="fas fa-heart"></i> SẢN PHẨM YÊU THÍCH</h3>
+            <span class="close-wishlist" id="closeWishlist">&times;</span>
+        </div>
+        <div class="wishlist-body" id="wishlistItems">
+            <div class="empty-wish-msg"><i class="far fa-heart"></i>
+                <p>Chưa có sản phẩm yêu thích</p>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
     <!-- HEADER -->
     <header class="header">
         <div class="header-inner">
@@ -140,9 +68,10 @@
                 <a href="#" class="nav-link">Liên hệ</a>
 
                 <div class="user-actions">
-                    <button class="icon-btn" aria-label="Tài khoản">
+                    <button class="icon-btn" onclick="window.location.href='login.html'">
                         <i class="fas fa-user"></i>
                     </button>
+
                     <button class="icon-btn" aria-label="Yêu thích" id="wishlistBtn">
                         <i class="far fa-heart"></i>
                         <span class="wishlist-count" id="wishlistCount">0</span>
@@ -239,7 +168,7 @@
                 <p>Email: <a
                         href="/cdn-cgi/l/email-protection#0c7a636879757d79636f3e3e3c3e3e3c3c394c6b616d6560226f6361"><span
                             class="__cf_email__"
-                            data-cfemail="691f060d1c10181c060a5b5b595b5b59595c290e04080005470a0604">[email&#160;protected]</span></a>
+                            data-cfemail="691f060d1c10181c060a5b5b595b5b59595c290e04080005470a0604">voduyquoc22022005@gmail.com</span></a>
                 </p>
             </div>
         </aside>
@@ -651,7 +580,7 @@
             <div class="footer-col contact-info">
                 <h4>LIÊN HỆ</h4>
                 <p><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                        data-cfemail="f5839a91808c84809a96c7c7c5c7c7c5c5c0b59298949c99db969a98">[email&#160;protected]</a>
+                        data-cfemail="f5839a91808c84809a96c7c7c5c7c7c5c5c0b59298949c99db969a98">voduyquoc22022005@gmail.com</a>
                 </p>
                 <p><i class="fas fa-phone"></i> 0832 127 162</p>
                 <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>

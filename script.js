@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
        MOBILE MENU DRAWER
     ========================================= */
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileNav = document.getElementById('mobileNav');
+    const mobileNav     = document.getElementById('mobileNav');
     if (mobileMenuBtn && mobileNav) {
         mobileMenuBtn.addEventListener('click', () => {
             const isOpen = mobileNav.classList.contains('open');
@@ -36,16 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================
        SIDEBAR TOGGLE (tablet/mobile)
     ========================================= */
-    // Tự tạo nút toggle nếu chưa có
-    const sidebar = document.querySelector('.sidebar');
+    const sidebar    = document.querySelector('.sidebar');
     const pageLayout = document.querySelector('.page-layout');
     if (sidebar && pageLayout) {
-        const existing = document.getElementById('sidebarToggle');
-        let toggleBtn = existing;
+        let toggleBtn = document.getElementById('sidebarToggle');
         if (!toggleBtn) {
             toggleBtn = document.createElement('button');
             toggleBtn.id = 'sidebarToggle';
-            toggleBtn.style.cssText = 'display:none;width:100%;padding:11px 16px;background:rgba(225,6,0,0.12);border:1px solid rgba(225,6,0,0.3);color:white;border-radius:10px;font-family:\'Titillium Web\',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;text-align:left;margin-bottom:8px;';
             pageLayout.insertBefore(toggleBtn, sidebar);
         }
         toggleBtn.textContent = '☰  Danh mục sản phẩm ▼';
@@ -58,18 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================
        PRICE RANGE FILTER
     ========================================= */
-    const priceRange = document.getElementById('priceRange');
+    const priceRange    = document.getElementById('priceRange');
     const priceRangeVal = document.getElementById('priceRangeVal');
-    const filterTags = document.querySelectorAll('.filter-tag');
+    const filterTags    = document.querySelectorAll('.filter-tag');
  
     function applyPriceFilter(max) {
         document.querySelectorAll('.product-card').forEach(card => {
-            const btn = card.querySelector('.btn-add-cart');
+            const btn         = card.querySelector('.btn-add-cart');
             if (!btn) return;
-            const onclickStr = btn.getAttribute('onclick') || '';
-            const priceMatch = onclickStr.match(/,\s*(\d+)/);
+            const onclickStr  = btn.getAttribute('onclick') || '';
+            const priceMatch  = onclickStr.match(/,\s*(\d+)/);
             if (!priceMatch) return;
-            const price = parseInt(priceMatch[1]);
+            const price       = parseInt(priceMatch[1]);
             card.style.display = price <= max ? '' : 'none';
         });
     }
@@ -88,7 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
             filterTags.forEach(t => t.classList.remove('active'));
             tag.classList.add('active');
             const max = parseInt(tag.dataset.max);
-            if (priceRange) { priceRange.value = max; priceRangeVal.textContent = max.toLocaleString('vi-VN') + '₫'; }
+            if (priceRange) {
+                priceRange.value = max;
+                priceRangeVal.textContent = max.toLocaleString('vi-VN') + '₫';
+            }
             applyPriceFilter(max);
         });
     });
@@ -97,21 +97,21 @@ document.addEventListener('DOMContentLoaded', () => {
        SLIDER
     ========================================= */
     function initSlider(sectionEl) {
-        const track = sectionEl.querySelector('.slider-track');
+        const track   = sectionEl.querySelector('.slider-track');
         const btnPrev = sectionEl.querySelector('.btn-prev');
         const btnNext = sectionEl.querySelector('.btn-next');
         if (!track || !btnPrev || !btnNext) return;
-        const cards = track.querySelectorAll('.product-card');
+        const cards   = track.querySelectorAll('.product-card');
         let currentIdx = 0;
  
         function getVisible() {
-            const vw = sectionEl.querySelector('.slider-viewport').offsetWidth;
+            const vw    = sectionEl.querySelector('.slider-viewport').offsetWidth;
             const cardW = cards[0].offsetWidth;
-            return Math.max(1, Math.round(vw / (cardW + 19)));
+            return Math.max(1, Math.round(vw / (cardW + 14)));
         }
         function update() {
             const cardW = cards[0].offsetWidth;
-            const gap = parseFloat(getComputedStyle(track).gap) || 19;
+            const gap   = parseFloat(getComputedStyle(track).gap) || 14;
             track.style.transform = `translateX(-${currentIdx * (cardW + gap)}px)`;
             btnPrev.disabled = currentIdx === 0;
             btnNext.disabled = currentIdx >= cards.length - getVisible();
@@ -124,37 +124,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.slider-section').forEach(initSlider);
  
     /* =========================================
-       AUTH MODAL
-    ========================================= */
-    const authContainer = document.getElementById('authContainer');
-    const authSignUpBtn = document.getElementById('authSignUp');
-    const authSignInBtn = document.getElementById('authSignIn');
-    const authModal = document.getElementById('authModal');
-    const userIcon = document.querySelector('.icon-btn .fa-user')?.parentElement;
- 
-    if (authSignUpBtn) authSignUpBtn.onclick = () => authContainer.classList.add('right-panel-active');
-    if (authSignInBtn) authSignInBtn.onclick = () => authContainer.classList.remove('right-panel-active');
-    if (userIcon) userIcon.onclick = e => { e.preventDefault(); authModal.style.display = 'block'; };
-    document.querySelector('.auth-close')?.addEventListener('click', () => { authModal.style.display = 'none'; });
-    window.onclick = e => { if (e.target === authModal) authModal.style.display = 'none'; };
- 
-    /* =========================================
        GIỎ HÀNG
     ========================================= */
-    const cartSidebar = document.getElementById('cartSidebar');
-    const cartOverlay = document.getElementById('cartOverlay');
-    const cartIcon = document.querySelector('.icon-btn .fa-shopping-cart')?.parentElement;
-    const closeCartBtn = document.getElementById('closeCart');
+    const cartSidebar        = document.getElementById('cartSidebar');
+    const cartOverlay        = document.getElementById('cartOverlay');
+    const cartIcon           = document.querySelector('.icon-btn .fa-shopping-cart')?.parentElement;
+    const closeCartBtn       = document.getElementById('closeCart');
     const cartItemsContainer = document.getElementById('cartItems');
-    const cartTotalDisplay = document.getElementById('cartTotalValue');
-    const cartCountBadge = document.querySelector('.cart-count');
+    const cartTotalDisplay   = document.getElementById('cartTotalValue');
+    const cartCountBadge     = document.querySelector('.cart-count');
     let cart = [];
  
-    const openCart = () => { cartSidebar.classList.add('active'); cartOverlay.classList.add('active'); };
-    const closeCartFunc = () => { cartSidebar.classList.remove('active'); cartOverlay.classList.remove('active'); };
-    cartIcon && (cartIcon.onclick = e => { e.preventDefault(); openCart(); });
-    closeCartBtn && (closeCartBtn.onclick = closeCartFunc);
-    cartOverlay && (cartOverlay.onclick = closeCartFunc);
+    const openCart  = () => { cartSidebar.classList.add('active'); cartOverlay.classList.add('active'); };
+    const closeCart = () => { cartSidebar.classList.remove('active'); cartOverlay.classList.remove('active'); };
+ 
+    cartIcon     && (cartIcon.onclick     = e => { e.preventDefault(); openCart(); });
+    closeCartBtn && (closeCartBtn.onclick  = closeCart);
+    cartOverlay  && (cartOverlay.onclick   = closeCart);
  
     window.addToCart = function(name, price, img, qty = 1) {
         const existing = cart.find(i => i.name === name);
@@ -173,32 +159,101 @@ document.addEventListener('DOMContentLoaded', () => {
             cartItemsContainer.innerHTML += `
                 <div class="cart-item">
                     <img src="${item.img}" alt="${item.name}">
-                    <div><h4>${item.name}</h4><p>${item.price.toLocaleString('vi-VN')}₫ × ${item.quantity}</p></div>
-                    <button class="remove-btn" onclick="removeItem(${idx})"><i class="fas fa-trash"></i></button>
+                    <div>
+                        <h4>${item.name}</h4>
+                        <p>${item.price.toLocaleString('vi-VN')}₫ × ${item.quantity}</p>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(${idx})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>`;
         });
-        if (!cart.length) cartItemsContainer.innerHTML = `<p style="color:#777;text-align:center;padding:2rem 0">Giỏ hàng trống. Hãy chọn xe đua của bạn!</p>`;
+        if (!cart.length) {
+            cartItemsContainer.innerHTML = `<div class="empty-cart-msg">Giỏ hàng trống. Hãy chọn xe đua của bạn!</div>`;
+        }
         cartTotalDisplay.innerText = total.toLocaleString('vi-VN') + '₫';
         if (cartCountBadge) cartCountBadge.innerText = count;
     }
+ 
     window.removeItem = idx => { cart.splice(idx, 1); updateCartUI(); };
  
     /* =========================================
-       WISHLIST
+       WISHLIST (lưu đủ thông tin sản phẩm)
     ========================================= */
-    let wishlist = [];
-    const wishlistCountEl = document.getElementById('wishlistCount');
+    let wishlist = []; // mảng object: { name, price, img }
+ 
+    const wishlistBtn      = document.getElementById('wishlistBtn');
+    const wishlistPanel    = document.getElementById('wishlistPanel');
+    const wishlistOverlay  = document.getElementById('wishlistOverlay');
+    const closeWishlistBtn = document.getElementById('closeWishlist');
+    const wishlistCountEl  = document.getElementById('wishlistCount');
+    const wishlistItems    = document.getElementById('wishlistItems');
  
     function updateWishlistBadge() {
         if (wishlistCountEl) wishlistCountEl.textContent = wishlist.length;
     }
  
+    function updateWishlistUI() {
+        if (!wishlistItems) return;
+        wishlistItems.innerHTML = '';
+        if (!wishlist.length) {
+            wishlistItems.innerHTML = `<div class="empty-wish-msg"><i class="far fa-heart"></i><p>Chưa có sản phẩm yêu thích</p></div>`;
+            return;
+        }
+        wishlist.forEach((item, idx) => {
+            wishlistItems.innerHTML += `
+                <div class="wish-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="wish-item-info">
+                        <h4>${item.name}</h4>
+                        <span class="wish-price">${item.price.toLocaleString('vi-VN')}₫</span>
+                        <button class="wish-add-cart" onclick="addToCart('${item.name}', ${item.price}, '${item.img}')">
+                            <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                        </button>
+                    </div>
+                    <button class="wish-remove" onclick="removeWishItem(${idx})">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>`;
+        });
+        updateWishlistBadge();
+    }
+ 
+    window.removeWishItem = function(idx) {
+        const name = wishlist[idx].name;
+        wishlist.splice(idx, 1);
+        // sync lại nút tim trên card
+        document.querySelectorAll('.btn-wishlist').forEach(btn => {
+            const cardName = btn.closest('.product-card')?.querySelector('h4')?.textContent?.trim();
+            if (cardName === name) {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="far fa-heart"></i>';
+            }
+        });
+        updateWishlistBadge();
+        updateWishlistUI();
+    };
+ 
+    const openWishlist  = () => { wishlistPanel?.classList.add('active'); wishlistOverlay?.classList.add('active'); };
+    const closeWishlist = () => { wishlistPanel?.classList.remove('active'); wishlistOverlay?.classList.remove('active'); };
+ 
+    wishlistBtn     && (wishlistBtn.onclick     = e => { e.preventDefault(); openWishlist(); });
+    closeWishlistBtn && (closeWishlistBtn.onclick = closeWishlist);
+    wishlistOverlay && (wishlistOverlay.onclick  = closeWishlist);
+ 
     window.toggleWishlist = function(btn) {
-        const card = btn.closest('.product-card');
-        const name = card.querySelector('h4')?.textContent?.trim() || '';
-        const idx = wishlist.indexOf(name);
+        const card  = btn.closest('.product-card');
+        const name  = card.querySelector('h4')?.textContent?.trim() || '';
+        const img   = card.querySelector('img')?.src || '';
+        // lấy giá từ onclick của btn-add-cart
+        const addBtn     = card.querySelector('.btn-add-cart');
+        const onclickStr = addBtn?.getAttribute('onclick') || '';
+        const priceMatch = onclickStr.match(/,\s*(\d+)/);
+        const price      = priceMatch ? parseInt(priceMatch[1]) : 0;
+ 
+        const idx = wishlist.findIndex(i => i.name === name);
         if (idx === -1) {
-            wishlist.push(name);
+            wishlist.push({ name, price, img });
             btn.classList.add('active');
             btn.innerHTML = '<i class="fas fa-heart"></i>';
             showToast(`❤️ Đã thêm vào yêu thích: ${name}`);
@@ -208,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.innerHTML = '<i class="far fa-heart"></i>';
         }
         updateWishlistBadge();
+        updateWishlistUI();
     };
  
     /* =========================================
@@ -218,44 +274,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let qvCurrentName = '', qvCurrentPrice = 0, qvCurrentImg = '';
  
     window.openQuickView = function(btn) {
-        const card = btn.closest('.product-card');
-        const img  = card.querySelector('img')?.src || '';
-        const brand = card.querySelector('.brand')?.textContent || '';
-        const name  = card.querySelector('h4')?.textContent?.trim() || '';
-        const priceEl = card.querySelector('.price');
+        const card      = btn.closest('.product-card');
+        const img       = card.querySelector('img')?.src || '';
+        const brand     = card.querySelector('.brand')?.textContent || '';
+        const name      = card.querySelector('h4')?.textContent?.trim() || '';
         const oldPriceEl = card.querySelector('.old-price');
-        const addBtn = card.querySelector('.btn-add-cart');
+        const addBtn    = card.querySelector('.btn-add-cart');
         const onclickStr = addBtn?.getAttribute('onclick') || '';
         const priceMatch = onclickStr.match(/,\s*(\d+)/);
-        const price = priceMatch ? parseInt(priceMatch[1]) : 0;
+        const price     = priceMatch ? parseInt(priceMatch[1]) : 0;
  
         qvCurrentName = name; qvCurrentPrice = price; qvCurrentImg = img;
  
-        document.getElementById('qvImg').src = img;
+        document.getElementById('qvImg').src    = img;
         document.getElementById('qvBrand').textContent = brand;
-        document.getElementById('qvName').textContent = name;
+        document.getElementById('qvName').textContent  = name;
         document.getElementById('qvPrice').textContent = price.toLocaleString('vi-VN') + '₫';
         document.getElementById('qvQty').value = 1;
  
         const oldPriceOut = document.getElementById('qvOldPrice');
         if (oldPriceEl) {
-            oldPriceOut.textContent = oldPriceEl.textContent;
-            oldPriceOut.style.display = '';
+            oldPriceOut.textContent    = oldPriceEl.textContent;
+            oldPriceOut.style.display  = '';
         } else {
             oldPriceOut.style.display = 'none';
         }
  
-        // Check wishlist state
         const qvWishBtn = document.getElementById('qvWishlist');
-        if (wishlist.includes(name)) {
-            qvWishBtn.innerHTML = '<i class="fas fa-heart"></i> Đã yêu thích';
-            qvWishBtn.style.background = '#ff6b9d';
-            qvWishBtn.style.color = 'white';
-        } else {
-            qvWishBtn.innerHTML = '<i class="far fa-heart"></i> Yêu thích';
-            qvWishBtn.style.background = '';
-            qvWishBtn.style.color = '';
-        }
+        const inWish    = wishlist.some(i => i.name === name);
+        qvWishBtn.innerHTML       = inWish ? '<i class="fas fa-heart"></i> Đã yêu thích' : '<i class="far fa-heart"></i> Yêu thích';
+        qvWishBtn.style.background = inWish ? '#ff6b9d' : '';
+        qvWishBtn.style.color      = inWish ? 'white' : '';
  
         qvModal.classList.add('open');
         document.body.style.overflow = 'hidden';
@@ -272,9 +321,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
  
     document.getElementById('qvWishlist')?.addEventListener('click', function() {
-        const idx = wishlist.indexOf(qvCurrentName);
+        const idx   = wishlist.findIndex(i => i.name === qvCurrentName);
         if (idx === -1) {
-            wishlist.push(qvCurrentName);
+            wishlist.push({ name: qvCurrentName, price: qvCurrentPrice, img: qvCurrentImg });
             this.innerHTML = '<i class="fas fa-heart"></i> Đã yêu thích';
             this.style.background = '#ff6b9d'; this.style.color = 'white';
             showToast(`❤️ Đã thêm vào yêu thích: ${qvCurrentName}`);
@@ -284,23 +333,42 @@ document.addEventListener('DOMContentLoaded', () => {
             this.style.background = ''; this.style.color = '';
         }
         updateWishlistBadge();
-        // Sync card button
+        updateWishlistUI();
+        // sync card button
         document.querySelectorAll('.btn-wishlist').forEach(btn => {
             const cardName = btn.closest('.product-card')?.querySelector('h4')?.textContent?.trim();
             if (cardName === qvCurrentName) {
-                btn.classList.toggle('active', wishlist.includes(qvCurrentName));
-                btn.innerHTML = wishlist.includes(qvCurrentName)
-                    ? '<i class="fas fa-heart"></i>'
-                    : '<i class="far fa-heart"></i>';
+                const inW = wishlist.some(i => i.name === qvCurrentName);
+                btn.classList.toggle('active', inW);
+                btn.innerHTML = inW ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
             }
         });
     });
  
     window.changeQty = function(delta) {
         const inp = document.getElementById('qvQty');
-        const val = Math.max(1, Math.min(99, parseInt(inp.value) + delta));
-        inp.value = val;
+        inp.value = Math.max(1, Math.min(99, parseInt(inp.value) + delta));
     };
+ 
+    /* =========================================
+       AUTH MODAL (giữ lại cho index.html)
+    ========================================= */
+    const authContainer = document.getElementById('authContainer');
+    const authSignUpBtn = document.getElementById('authSignUp');
+    const authSignInBtn = document.getElementById('authSignIn');
+    const authModal     = document.getElementById('authModal');
+    const userIcon      = document.querySelector('.icon-btn .fa-user')?.parentElement;
+ 
+    if (authSignUpBtn) authSignUpBtn.onclick = () => authContainer?.classList.add('right-panel-active');
+    if (authSignInBtn) authSignInBtn.onclick = () => authContainer?.classList.remove('right-panel-active');
+    if (userIcon) userIcon.onclick = e => {
+        e.preventDefault();
+        // Nếu có login.html thì chuyển trang, không thì mở modal
+        window.location.href = 'login.html';
+    };
+    document.querySelector('.auth-close')?.addEventListener('click', () => {
+        if (authModal) authModal.style.display = 'none';
+    });
  
     /* =========================================
        SCROLL TO TOP
@@ -312,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
  
     /* =========================================
-       TOAST
+       TOAST NOTIFICATION
     ========================================= */
     function showToast(msg) {
         let toast = document.getElementById('f1-toast');
@@ -320,15 +388,23 @@ document.addEventListener('DOMContentLoaded', () => {
             toast = document.createElement('div');
             toast.id = 'f1-toast';
             Object.assign(toast.style, {
-                position: 'fixed', bottom: '24px', right: '24px',
-                background: '#111', color: '#fff',
-                padding: '12px 22px', borderRadius: '10px',
-                border: '1px solid rgba(225,6,0,0.5)',
-                opacity: '0', transition: '0.3s', zIndex: '9999',
+                position:   'fixed',
+                bottom:     '24px',
+                right:      '24px',
+                background: '#111',
+                color:      '#fff',
+                padding:    '12px 20px',
+                borderRadius: '10px',
+                border:     '1px solid rgba(225,6,0,0.5)',
+                opacity:    '0',
+                transition: '0.3s',
+                zIndex:     '9999',
                 fontFamily: "'Titillium Web',sans-serif",
-                fontSize: '0.93rem', fontWeight: '600',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-                maxWidth: '300px'
+                fontSize:   '0.9rem',
+                fontWeight: '600',
+                boxShadow:  '0 8px 24px rgba(0,0,0,0.5)',
+                maxWidth:   '300px',
+                pointerEvents: 'none'
             });
             document.body.appendChild(toast);
         }

@@ -143,6 +143,10 @@
                     <button class="icon-btn" aria-label="Tài khoản">
                         <i class="fas fa-user"></i>
                     </button>
+                    <button class="icon-btn" aria-label="Yêu thích" id="wishlistBtn">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-count" id="wishlistCount">0</span>
+                    </button>
                     <button class="icon-btn cart-btn" aria-label="Giỏ hàng">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cart-count">0</span>
@@ -167,14 +171,7 @@
     </nav>
 
     <!-- FIXED CONTAINER -->
-    <div class="container">
-
-        <!-- SIDEBAR TOGGLE (mobile only) -->
-        <button id="sidebarToggle"
-            style="display:none;width:100%;padding:12px 18px;background:rgba(225,6,0,0.12);border:1px solid rgba(225,6,0,0.3);color:white;border-radius:10px;font-family:'Titillium Web',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;text-align:left;">
-            Danh mục sản phẩm ▼
-        </button>
-
+    <div class="page-layout">
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-title">
@@ -220,13 +217,29 @@
                 </div>
             </nav>
 
+            <!-- FILTER GIÁ -->
+            <div class="sidebar-filter">
+                <h4><i class="fas fa-sliders-h"></i> Lọc theo giá</h4>
+                <div class="price-range-display">
+                    <span>0₫</span>
+                    <span id="priceRangeVal">10.000.000₫</span>
+                </div>
+                <input type="range" id="priceRange" min="0" max="10000000" step="100000" value="10000000">
+                <div class="filter-tags">
+                    <button class="filter-tag active" data-max="10000000">Tất cả</button>
+                    <button class="filter-tag" data-max="1000000">Dưới 1tr</button>
+                    <button class="filter-tag" data-max="3000000">Dưới 3tr</button>
+                    <button class="filter-tag" data-max="7000000">Dưới 7tr</button>
+                </div>
+            </div>
+
             <div class="sidebar-contact">
                 <h4><i class="fas fa-headset"></i> Hỗ trợ nhanh</h4>
                 <p>Hotline: <strong>0832 127 162</strong></p>
                 <p>Email: <a
                         href="/cdn-cgi/l/email-protection#0c7a636879757d79636f3e3e3c3e3e3c3c394c6b616d6560226f6361"><span
                             class="__cf_email__"
-                            data-cfemail="691f060d1c10181c060a5b5b595b5b59595c290e04080005470a0604">voduyquoc22022005@gmail.com</span></a>
+                            data-cfemail="691f060d1c10181c060a5b5b595b5b59595c290e04080005470a0604">[email&#160;protected]</span></a>
                 </p>
             </div>
         </aside>
@@ -289,6 +302,13 @@
                                 <span class="badge new">NEW</span>
                                 <div class="img-container">
                                     <img src="anh/lego/redbull/speed1.png" alt="RB20">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">RED BULL</p>
                                 <h4>Xe đua F1® Oracle Red Bull Racing RB20</h4>
@@ -306,6 +326,13 @@
                                 <div class="img-container">
                                     <img src="https://www.lego.com/cdn/cs/set/assets/bltaefe7da97d921e16/77251_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
                                         alt="McLAREN MCL38">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">McLAREN</p>
                                 <h4>Xe đua McLaren F1® Team MCL38</h4>
@@ -323,6 +350,13 @@
                                 <div class="img-container">
                                     <img src="https://www.lego.com/cdn/cs/set/assets/bltdebbd34296f1ce78/77244_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
                                         alt="MERCEDES-AMG">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">MERCEDES-AMG</p>
                                 <h4>Xe đua Mercedes-AMG F1® W15</h4>
@@ -340,6 +374,13 @@
                                 <div class="img-container">
                                     <img src="https://www.lego.com/cdn/cs/set/assets/bltd193d7c8cfbfc4cd/77242_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
                                         alt="SF24">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">FERRARI</p>
                                 <h4>Xe đua F1® Ferrari SF-24</h4>
@@ -357,6 +398,13 @@
                                 <div class="img-container">
                                     <img src="https://www.lego.com/cdn/cs/set/assets/bltabd8d686bcca8fca/blt480f8e3525715603-77259_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
                                         alt="R26">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">AUDI</p>
                                 <h4>Xe đua Audi Revolut F1® Team R26</h4>
@@ -393,6 +441,13 @@
                                 <div class="img-container">
                                     <img src="https://www.lego.com/cdn/cs/set/assets/blt4d73eeeba610152c/blt94fedcc1daf48b2a-42228_boxprod_v39_en-us.png?format=webply&fit=bounds&quality=70&width=1200&height=1200&dpr=1.5"
                                         alt="MCL39">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">McLAREN</p>
                                 <h4>Xe đua F1® McLaren MCL39</h4>
@@ -413,6 +468,13 @@
                                 <div class="img-container">
                                     <img src="https://www.lego.com/cdn/cs/set/assets/blt2847611d46bfd9e7/42206_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
                                         alt="Red Bull RB20">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">RED BULL</p>
                                 <h4>Red Bull RB20 1:8 Scale</h4>
@@ -432,6 +494,13 @@
                                 <span class="badge sale">SALE</span>
                                 <div class="img-container">
                                     <img src="anh/lego/redbull/speed1.png" alt="RB20">
+
+                                    <div class="card-actions">
+                                        <button class="btn-quick-view" onclick="openQuickView(this)"><i
+                                                class="fas fa-eye"></i> Xem nhanh</button>
+                                        <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                                class="far fa-heart"></i></button>
+                                    </div>
                                 </div>
                                 <p class="brand">RED BULL</p>
                                 <h4>Xe đua F1® Oracle Red Bull Racing RB20</h4>
@@ -461,6 +530,13 @@
                         <div class="img-container">
                             <img src="https://via.placeholder.com/600x420/111/fff?text=Ferrari+Hoodie"
                                 alt="Ferrari Hoodie">
+
+                            <div class="card-actions">
+                                <button class="btn-quick-view" onclick="openQuickView(this)"><i class="fas fa-eye"></i>
+                                    Xem nhanh</button>
+                                <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                         </div>
                         <p class="brand">FERRARI</p>
                         <h4>Ferrari Official Hoodie 2026</h4>
@@ -477,6 +553,13 @@
                         <span class="badge hot">HOT</span>
                         <div class="img-container">
                             <img src="https://via.placeholder.com/600x420/111/fff?text=McLaren+Cap" alt="McLaren Cap">
+
+                            <div class="card-actions">
+                                <button class="btn-quick-view" onclick="openQuickView(this)"><i class="fas fa-eye"></i>
+                                    Xem nhanh</button>
+                                <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                         </div>
                         <p class="brand">MCLAREN</p>
                         <h4>McLaren Team Cap</h4>
@@ -506,6 +589,41 @@
         </main>
     </div>
 
+    <button class="scroll-top" id="scrollTop" title="Lên đầu trang"><i class="fas fa-chevron-up"></i></button>
+
+    <!-- QUICK VIEW MODAL -->
+    <div class="quickview-modal" id="quickviewModal">
+        <div class="quickview-inner">
+            <button class="quickview-close" id="quickviewClose"><i class="fas fa-times"></i></button>
+            <div class="quickview-img">
+                <img id="qvImg" src="" alt="">
+            </div>
+            <div class="quickview-info">
+                <p class="brand" id="qvBrand">BRAND</p>
+                <h2 id="qvName">Tên sản phẩm</h2>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <span class="price" id="qvPrice">0₫</span>
+                    <span class="old-price" id="qvOldPrice" style="display:none"></span>
+                </div>
+                <p style="font-size:0.88rem;color:#aaa;margin-bottom:14px;" id="qvDesc">Sản phẩm chính hãng, bảo hành 12
+                    tháng. Giao hàng toàn quốc.</p>
+                <div class="quickview-qty">
+                    <span class="qty-label">Số lượng:</span>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                        <input class="qty-val" type="number" id="qvQty" value="1" min="1" max="99" readonly>
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+                </div>
+                <div class="quickview-actions">
+                    <button class="btn-add-cart" id="qvAddCart" style="flex:1"><i class="fas fa-shopping-cart"></i> Thêm
+                        vào giỏ</button>
+                    <button class="btn-wishlist-lg" id="qvWishlist"><i class="far fa-heart"></i> Yêu thích</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-inner">
@@ -532,12 +650,22 @@
 
             <div class="footer-col contact-info">
                 <h4>LIÊN HỆ</h4>
-                <p><i class="fas fa-envelope"></i> <a
-                        href="mailto:voduyquoc22022005@gmail.com">voduyquoc22022005@gmail.com</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
+                        data-cfemail="f5839a91808c84809a96c7c7c5c7c7c5c5c0b59298949c99db969a98">[email&#160;protected]</a>
+                </p>
                 <p><i class="fas fa-phone"></i> 0832 127 162</p>
                 <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
             </div>
+
+
         </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 F1 Store. All rights reserved.</p>
         </div>
     </footer>
+
+    <script src="script.js"></script>
+
 </body>
+
+</html>

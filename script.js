@@ -181,6 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
        WISHLIST (lưu đủ thông tin sản phẩm)
     ========================================= */
     let wishlist = []; // mảng object: { name, price, img }
+    window.wishlist = wishlist;
  
     const wishlistBtn      = document.getElementById('wishlistBtn');
     const wishlistPanel    = document.getElementById('wishlistPanel');
@@ -192,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateWishlistBadge() {
         if (wishlistCountEl) wishlistCountEl.textContent = wishlist.length;
     }
+    window.updateWishlistBadge = updateWishlistBadge;
  
     function updateWishlistUI() {
         if (!wishlistItems) return;
@@ -218,6 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         updateWishlistBadge();
     }
+    window.updateWishlistUI = updateWishlistUI;
  
     window.removeWishItem = function(idx) {
         const name = wishlist[idx].name;
@@ -413,5 +416,185 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(toast._t);
         toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2400);
     }
+    window.showToast = showToast;
  
 });
+/* =========================================
+   MODAL CHI TIẾT SẢN PHẨM
+========================================= */
+let pmCurrentName = '', pmCurrentPrice = 0, pmCurrentImg = '';
+ 
+window.openProductModal = function(card) {
+    // Nếu click vào nút (giỏ hàng, yêu thích) thì không mở modal
+    if (event && (
+        event.target.closest('.btn-add-cart') ||
+        event.target.closest('.btn-wish-inline') ||
+        event.target.closest('.btn-wishlist')
+    )) return;
+ 
+    const img       = card.querySelector('.img-container img')?.src || '';
+    const brand     = card.querySelector('.brand')?.textContent || '';
+    const name      = card.querySelector('h4')?.textContent?.trim() || '';
+    const priceEl   = card.querySelector('.price');
+    const oldPriceEl = card.querySelector('.old-price');
+    const badgeEl   = card.querySelector('.badge');
+ 
+    // Lấy giá từ onclick btn-add-cart
+    const addBtn     = card.querySelector('.btn-add-cart');
+    const onclickStr = addBtn?.getAttribute('onclick') || '';
+    const priceMatch = onclickStr.match(/,\s*(\d+)/);
+    const price      = priceMatch ? parseInt(priceMatch[1]) : 0;
+ 
+    pmCurrentName = name;
+    pmCurrentPrice = price;
+    pmCurrentImg = img;
+ 
+    // Điền thông tin
+    document.getElementById('pmImg').src          = img;
+    document.getElementById('pmBrand').textContent = brand;
+    document.getElementById('pmName').textContent  = name;
+    document.getElementById('pmPrice').textContent = price.toLocaleString('vi-VN') + '₫';
+    document.getElementById('pmQty').value         = 1;
+ 
+    // Badge
+    const pmBadge = document.getElementById('pmBadge');
+    if (badgeEl) {
+        pmBadge.textContent   = badgeEl.textContent;
+        pmBadge.className     = 'pm-badge ' + (card.dataset.badge || '');
+        pmBadge.style.display = 'inline-block';
+    } else {
+        pmBadge.style.display = 'none';
+    }
+ 
+    // Giá cũ
+    const pmOldPrice = document.getElementById('pmOldPrice');
+    if (oldPriceEl) {
+        pmOldPrice.textContent   = oldPriceEl.textContent;
+        pmOldPrice.style.display = '';
+    } else {
+        pmOldPrice.style.display = 'none';
+    }
+ 
+    // Rating
+    const rating  = parseFloat(card.dataset.rating) || 4.5;
+    const reviews = card.dataset.reviews || '0';
+    const stars   = '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating));
+    document.getElementById('pmStars').innerHTML = `<span style="color:#ffaa00">${stars}</span> <span>${rating}/5 (${reviews} đánh giá)</span>`;
+ 
+    // Mô tả
+    document.getElementById('pmDesc').textContent = card.dataset.desc || 'Sản phẩm chính hãng, bảo hành 12 tháng. Giao hàng toàn quốc.';
+ 
+    // Thông số
+    const specsEl = document.getElementById('pmSpecs');
+    specsEl.innerHTML = '';
+    try {
+        const specs = JSON.parse(card.dataset.specs || '[]');
+        specs.forEach(([label, val]) => {
+            specsEl.innerHTML += `<div class="pm-spec-row">
+                <span class="pm-spec-label">${label}</span>
+                <span class="pm-spec-value">${val}</span>
+            </div>`;
+        });
+    } catch(e) {}
+ 
+    // Nút yêu thích
+    const inWish = typeof wishlist !== 'undefined' && wishlist.some(i => i.name === name);
+    const pmWishBtn = document.getElementById('pmBtnWish');
+    pmWishBtn.className = 'pm-btn-wish' + (inWish ? ' active' : '');
+    pmWishBtn.innerHTML = inWish ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+ 
+    // Nút thêm giỏ hàng
+    document.getElementById('pmBtnCart').onclick = function() {
+        const qty = parseInt(document.getElementById('pmQty').value) || 1;
+        addToCart(pmCurrentName, pmCurrentPrice, pmCurrentImg, qty);
+        closeProductModalDirect();
+    };
+ 
+    document.getElementById('productModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+};
+ 
+window.closeProductModal = function(e) {
+    if (e.target === document.getElementById('productModalOverlay')) {
+        closeProductModalDirect();
+    }
+};
+ 
+window.closeProductModalDirect = function() {
+    document.getElementById('productModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+};
+ 
+window.pmChangeQty = function(delta) {
+    const inp = document.getElementById('pmQty');
+    inp.value = Math.max(1, Math.min(99, parseInt(inp.value) + delta));
+};
+ 
+window.pmToggleWish = function() {
+    const btn = document.getElementById('pmBtnWish');
+    const idx = wishlist.findIndex(i => i.name === pmCurrentName);
+    if (idx === -1) {
+        wishlist.push({ name: pmCurrentName, price: pmCurrentPrice, img: pmCurrentImg });
+        btn.className = 'pm-btn-wish active';
+        btn.innerHTML = '<i class="fas fa-heart"></i>';
+        showToast(`❤️ Đã thêm vào yêu thích: ${pmCurrentName}`);
+    } else {
+        wishlist.splice(idx, 1);
+        btn.className = 'pm-btn-wish';
+        btn.innerHTML = '<i class="far fa-heart"></i>';
+    }
+    updateWishlistBadge();
+    updateWishlistUI();
+    // Sync card buttons
+    document.querySelectorAll('.btn-wish-inline, .btn-wishlist').forEach(b => {
+        const card = b.closest('.product-card');
+        if (!card) return;
+        const cardName = card.querySelector('h4')?.textContent?.trim();
+        if (cardName === pmCurrentName) {
+            const inW = wishlist.some(i => i.name === pmCurrentName);
+            b.classList.toggle('active', inW);
+            if (b.classList.contains('btn-wishlist')) {
+                b.innerHTML = inW ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+            } else {
+                b.innerHTML = inW ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+            }
+        }
+    });
+};
+ 
+/* Nút yêu thích inline trong price-row */
+window.toggleWishlistInline = function(btn, name, price, img) {
+    const idx = wishlist.findIndex(i => i.name === name);
+    if (idx === -1) {
+        wishlist.push({ name, price, img });
+        btn.classList.add('active');
+        btn.innerHTML = '<i class="fas fa-heart"></i>';
+        showToast(`❤️ Đã thêm vào yêu thích: ${name}`);
+    } else {
+        wishlist.splice(idx, 1);
+        btn.classList.remove('active');
+        btn.innerHTML = '<i class="far fa-heart"></i>';
+    }
+    updateWishlistBadge();
+    updateWishlistUI();
+    // Sync btn-wishlist trên ảnh nếu có
+    document.querySelectorAll('.btn-wishlist').forEach(b => {
+        const cardName = b.closest('.product-card')?.querySelector('h4')?.textContent?.trim();
+        if (cardName === name) {
+            const inW = wishlist.some(i => i.name === name);
+            b.classList.toggle('active', inW);
+            b.innerHTML = inW ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+        }
+    });
+};
+ 
+/* ESC để đóng modal */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        closeProductModalDirect();
+    }
+});
+ 
+// Expose wishlist, updateWishlistBadge, updateWishlistUI cho pmToggleWish
+// (chúng đã được khai báo trong DOMContentLoaded — cần expose ra global)
+ 

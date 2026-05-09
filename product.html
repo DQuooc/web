@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sản phẩm — F1 Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- CART + WISHLIST SIDEBARS (giống index) -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> GIỎ HÀNG CỦA BẠN</h3><span class="close-cart"
+                id="closeCart">&times;</span>
+        </div>
+        <div class="cart-body" id="cartItems">
+            <div class="empty-cart-msg">Giỏ hàng trống.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total"><span>TỔNG CỘNG:</span><span id="cartTotalValue">0₫</span></div><button
+                class="btn-checkout">THANH TOÁN NGAY</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="wishlist-panel" id="wishlistPanel">
+        <div class="wishlist-header">
+            <h3><i class="fas fa-heart"></i> SẢN PHẨM YÊU THÍCH</h3><span class="close-wishlist"
+                id="closeWishlist">&times;</span>
+        </div>
+        <div class="wishlist-body" id="wishlistItems">
+            <div class="empty-wish-msg"><i class="far fa-heart"></i>
+                <p>Chưa có sản phẩm yêu thích</p>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner"><a href="index.html" class="logo"><img src="assets/images/logo/logo.png"
+                    alt="F1 Store Logo"></a><input type="text" class="search" placeholder="Tìm kiếm...">
+            <nav class="nav"><a href="index.html" class="nav-link">Trang chủ</a><a href="team.html" class="nav-link">Sản
+                    phẩm</a><a href="team.html" class="nav-link">Đội đua</a><a href="news.html" class="nav-link">Tin
+                    tức</a><a href="contact.html" class="nav-link">Liên hệ</a>
+                <div class="user-actions">
+                    <button class="icon-btn" onclick="window.location.href='login.html'"><i
+                            class="fas fa-user"></i></button>
+                    <button class="icon-btn" onclick="openWishlistPanel()"><i class="far fa-heart"></i><span
+                            class="wishlist-count" id="wishlistCount">0</span></button>
+                    <button class="icon-btn cart-btn" onclick="openCartSidebar()"><i
+                            class="fas fa-shopping-cart"></i><span class="cart-count" id="cart-count">0</span></button>
+                </div>
+            </nav><button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav"><input type="text" class="mobile-search" placeholder="Tìm kiếm..."><a
+            href="index.html" class="nav-link">Trang chủ</a><a href="team.html" class="nav-link">Sản phẩm</a><a
+            href="team.html" class="nav-link">Đội đua</a><a href="news.html" class="nav-link">Tin tức</a><a
+            href="contact.html" class="nav-link">Liên hệ</a></nav>
+
+    <nav class="breadcrumb" id="breadcrumb"><a href="index.html"><i class="fas fa-home"></i></a><span
+            class="sep">›</span><a href="team.html">Sản phẩm</a><span class="sep">›</span><span
+            id="bcProductName">...</span></nav>
+
+    <div class="pd-wrapper" id="pdWrapper">
+        <div class="pd-not-found" id="pdNotFound" style="display:none"><i class="fas fa-search"></i>
+            <h2>Không tìm thấy sản phẩm</h2><a href="index.html">← Quay lại trang chủ</a>
+        </div>
+    </div>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-chevron-up"></i></button>
+
+    <!-- MODAL CHI TIẾT SẢN PHẨM -->
+    <div class="product-modal-overlay" id="productModalOverlay">
+        <div class="product-modal" id="productModal"><button class="pm-close" onclick="closeProductModalDirect()"><i
+                    class="fas fa-times"></i></button>
+            <div class="product-modal-body">
+                <div class="pm-info">
+                    <div id="pmBadge" class="pm-badge" style="display:none"></div>
+                    <p class="pm-brand" id="pmBrand">BRAND</p>
+                    <h2 class="pm-name" id="pmName">Tên sản phẩm</h2>
+                    <div class="pm-stars" id="pmStars">★★★★★ <span>(0 đánh giá)</span></div>
+                    <div class="pm-price-row"><span class="pm-price" id="pmPrice">0₫</span><span class="pm-old-price"
+                            id="pmOldPrice"></span></div>
+                    <div class="pm-divider"></div>
+                    <p class="pm-desc" id="pmDesc">Mô tả sản phẩm...</p>
+                    <div class="pm-specs" id="pmSpecs"></div>
+                    <div class="pm-divider"></div>
+                    <div class="pm-qty-row"><span class="pm-qty-label">Số lượng:</span>
+                        <div class="pm-qty-controls"><button class="pm-qty-btn"
+                                onclick="pmChangeQty(-1)">−</button><input class="pm-qty-input" type="number" id="pmQty"
+                                value="1" min="1" max="99" readonly><button class="pm-qty-btn"
+                                onclick="pmChangeQty(1)">+</button></div>
+                    </div>
+                    <div class="pm-actions"><button class="pm-btn-cart" id="pmBtnCart"><i
+                                class="fas fa-shopping-cart"></i> Thêm vào giỏ</button><button class="pm-btn-wish"
+                            id="pmBtnWish" onclick="pmToggleWish()"><i class="far fa-heart"></i></button></div>
+                </div>
+                <div class="pm-gallery"><img id="pmImg" src="" alt=""></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col about">
+                <h4>F1 STORE</h4>
+                <p>Cửa hàng chính thức cung cấp merchandise Formula 1 tại Việt Nam.</p>
+                <div class="socials"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i
+                            class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a
+                        href="#"><i class="fab fa-tiktok"></i></a></div>
+            </div>
+            <div class="footer-col links">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-info">
+                <h4>LIÊN HỆ</h4>
+                <p><i class="fas fa-envelope"></i> <a
+                        href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> 0832 127 162</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 F1 Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="data/teams.js"></script>
+    <script src="data/categories.js"></script>
+    <script src="data/products.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/product.js"></script>
+</body>
+
+</html>

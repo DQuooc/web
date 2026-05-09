@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm — F1 Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Thanh lọc đội đua ngang, có scroll */
+        .team-scroll-wrapper {
+            margin-bottom: 1.5rem;
+            background: rgba(15, 15, 20, 0.5);
+            border-radius: 12px;
+            padding: 0.5rem 0;
+        }
+
+        .team-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding: 0 0.8rem;
+        }
+
+        .team-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            border: 1px solid transparent;
+        }
+
+        .team-tab img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .team-tab.active {
+            background: var(--red);
+            color: white;
+            border-color: var(--red);
+        }
+
+        .team-tab:hover {
+            background: rgba(225, 6, 0, 0.2);
+            color: white;
+        }
+
+        /* Đảm bảo sidebar trái giữ nguyên style từ file gốc */
+        @media (max-width: 1024px) {
+            .team-scroll-wrapper {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CART SIDEBAR (giữ nguyên như index.html cũ) -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> GIỎ HÀNG CỦA BẠN</h3>
+            <span class="close-cart" id="closeCart">&times;</span>
+        </div>
+        <div class="cart-body" id="cartItems">
+            <div class="empty-cart-msg">Giỏ hàng trống. Hãy chọn xe đua của bạn!</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TỔNG CỘNG:</span>
+                <span id="cartTotalValue">0₫</span>
+            </div>
+            <button class="btn-checkout">THANH TOÁN NGAY</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+
+
+    <!-- WISHLIST PANEL -->
+    <div class="wishlist-panel" id="wishlistPanel">
+        <div class="wishlist-header">
+            <h3><i class="fas fa-heart"></i> SẢN PHẨM YÊU THÍCH</h3>
+            <span class="close-wishlist" id="closeWishlist">&times;</span>
+        </div>
+        <div class="wishlist-body" id="wishlistItems">
+            <div class="empty-wish-msg"><i class="far fa-heart"></i>
+                <p>Chưa có sản phẩm yêu thích</p>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo/logo.png" alt="F1 Store Logo">
+            </a>
+            <input type="text" class="search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+
+            <nav class="nav" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="team.html" class="nav-link">Sản phẩm</a>
+                <a href="news.html" class="nav-link">Tin tức</a>
+                <a href="contact.html" class="nav-link">Liên hệ</a>
+
+                <div class="user-actions">
+                    <!-- User: quay về trang chủ -->
+                    <button class="icon-btn" onclick="window.location.href='login.html'">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <!-- Yêu thích -->
+                    <button class="icon-btn" onclick="openWishlistPanel()">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-count" id="wishlistCount">0</span>
+                    </button>
+                    <!-- Giỏ hàng -->
+                    <button class="icon-btn cart-btn" onclick="openCartSidebar()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu di động">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV DRAWER -->
+    <nav class="mobile-nav" id="mobileNav">
+        <input type="text" class="mobile-search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="team.html" class="nav-link">Sản phẩm</a>        <a href="news.html" class="nav-link">Tin tức</a>
+        <a href="contact.html" class="nav-link">Liên hệ</a>
+    </nav>
+    <div class="page-layout">
+        <!-- SIDEBAR TRÁI (giữ nguyên y hệt) -->
+        <aside class="sidebar">
+            <div class="sidebar-title"><i class="fas fa-list"></i> DANH MỤC</div>
+            <nav class="category-menu">
+                <div class="menu-group">
+                    <div class="menu-main">Mô hình F1 LEGO <i class="fas fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="lego-speed">LEGO Speed Champions</a></li>
+                        <li><a href="#" data-category="lego-technic">LEGO Technic F1</a></li>
+                    </ul>
+                </div>
+                <div class="menu-group">
+                    <div class="menu-main">Mô hình tỷ lệ <i class="fas fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="scale-118">Tỷ lệ 1:18</a></li>
+                        <li><a href="#" data-category="scale-143">Tỷ lệ 1:43</a></li>
+                    </ul>
+                </div>
+                <div class="menu-group">
+                    <div class="menu-main">Thời trang & Phụ kiện <i class="fas fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="fashion">Áo & Mũ & Phụ kiện</a></li>
+                    </ul>
+                </div>
+                <div class="menu-group">
+                    <div class="menu-main">Đồ sưu tầm đặc biệt <i class="fas fa-chevron-down"></i></div>
+                    <ul class="submenu">
+                        <li><a href="#" data-category="limited">Limited Edition</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Lọc giá -->
+            <div class="sidebar-filter">
+                <h4><i class="fas fa-sliders-h"></i> Lọc theo giá</h4>
+                <div class="price-range-display"><span>0₫</span><span id="priceRangeVal">10.000.000₫</span></div>
+                <input type="range" id="priceRange" min="0" max="10000000" step="100000" value="10000000">
+                <div class="filter-tags">
+                    <button class="filter-tag active" data-max="10000000">Tất cả</button>
+                    <button class="filter-tag" data-max="1000000">Dưới 1tr</button>
+                    <button class="filter-tag" data-max="3000000">Dưới 3tr</button>
+                    <button class="filter-tag" data-max="7000000">Dưới 7tr</button>
+                </div>
+            </div>
+
+            <!-- Hỗ trợ nhanh -->
+            <div class="sidebar-contact">
+                <h4><i class="fas fa-headset"></i> Hỗ trợ nhanh</h4>
+                <p>Hotline: <strong>0832 127 162</strong></p>
+                <p>Email: <a href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT (bên phải) -->
+        <main class="main">
+            <!-- THANH LỌC ĐỘI ĐUA (NGANG, CÓ SCROLL) -->
+            <div class="team-scroll-wrapper">
+                <div class="team-tabs" id="teamTabs"></div>
+            </div>
+
+            <!-- TOOLBAR: kết quả, tìm kiếm, sắp xếp -->
+            <div class="products-toolbar"
+                style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <p class="products-count" id="productsCountLabel">Đang tải...</p>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm..."
+                        style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 30px; color: white;">
+                    <select id="sortSelect" class="sort-select">
+                        <option value="default">Mặc định</option>
+                        <option value="price-asc">Giá: Thấp → Cao</option>
+                        <option value="price-desc">Giá: Cao → Thấp</option>
+                        <option value="rating">Đánh giá cao nhất</option>
+                        <option value="newest">Mới nhất</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- GRID SẢN PHẨM -->
+            <div class="product-grid-static" id="productGrid"></div>
+        </main>
+    </div>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-chevron-up"></i></button>
+
+    <!-- MODAL CHI TIẾT SẢN PHẨM (giống index) -->
+    <div class="product-modal-overlay" id="productModalOverlay" onclick="closeProductModal(event)">
+        <div class="product-modal" id="productModal">
+            <button class="pm-close" onclick="closeProductModalDirect()"><i class="fas fa-times"></i></button>
+            <div class="product-modal-body">
+                <div class="pm-info">
+                    <div id="pmBadge" class="pm-badge" style="display:none"></div>
+                    <p class="pm-brand" id="pmBrand">BRAND</p>
+                    <h2 class="pm-name" id="pmName">Tên sản phẩm</h2>
+                    <div class="pm-stars" id="pmStars">★★★★★ <span>(0 đánh giá)</span></div>
+                    <div class="pm-price-row">
+                        <span class="pm-price" id="pmPrice">0₫</span>
+                        <span class="pm-old-price" id="pmOldPrice" style="display:none"></span>
+                    </div>
+                    <div class="pm-divider"></div>
+                    <p class="pm-desc" id="pmDesc">Mô tả sản phẩm...</p>
+                    <div class="pm-specs" id="pmSpecs"></div>
+                    <div class="pm-divider"></div>
+                    <div class="pm-qty-row">
+                        <span class="pm-qty-label">Số lượng:</span>
+                        <div class="pm-qty-controls">
+                            <button class="pm-qty-btn" onclick="pmChangeQty(-1)">−</button>
+                            <input class="pm-qty-input" type="number" id="pmQty" value="1" min="1" max="99" readonly>
+                            <button class="pm-qty-btn" onclick="pmChangeQty(1)">+</button>
+                        </div>
+                    </div>
+                    <div class="pm-actions">
+                        <button class="pm-btn-cart" id="pmBtnCart"><i class="fas fa-shopping-cart"></i> Thêm vào
+                            giỏ</button>
+                        <button class="pm-btn-wish" id="pmBtnWish" onclick="pmToggleWish()"><i
+                                class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                <div class="pm-gallery">
+                    <img id="pmImg" src="" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col about">
+                <h4>F1 STORE</h4>
+                <p>Cửa hàng chính thức cung cấp merchandise Formula 1 tại Việt Nam.</p>
+                <div class="socials">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col links">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Điều khoản dịch vụ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col contact-info">
+                <h4>LIÊN HỆ</h4>
+                <p><i class="fas fa-envelope"></i> <a
+                        href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> 0832 127 162</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 F1 Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="data/teams.js"></script>
+    <script src="data/categories.js"></script>
+    <script src="data/products.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/team.js"></script>
+</body>
+
+</html>

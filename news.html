@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin tức F1 — F1 Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .news-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid rgba(225, 6, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--red);
+        }
+
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.05);
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-date {
+            font-size: 0.8rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: white;
+        }
+
+        .news-summary {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 1rem;
+        }
+
+        .news-readmore {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .page-title {
+            margin: 2rem 0 1rem;
+            font-size: 1.8rem;
+            border-left: 4px solid var(--red);
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CART + WISHLIST SIDEBARS (giống index) -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> GIỎ HÀNG CỦA BẠN</h3><span class="close-cart"
+                id="closeCart">&times;</span>
+        </div>
+        <div class="cart-body" id="cartItems">
+            <div class="empty-cart-msg">Giỏ hàng trống. Hãy chọn xe đua của bạn!</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total"><span>TỔNG CỘNG:</span><span id="cartTotalValue">0₫</span></div><button
+                class="btn-checkout">THANH TOÁN NGAY</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="wishlist-panel" id="wishlistPanel">
+        <div class="wishlist-header">
+            <h3><i class="fas fa-heart"></i> SẢN PHẨM YÊU THÍCH</h3><span class="close-wishlist"
+                id="closeWishlist">&times;</span>
+        </div>
+        <div class="wishlist-body" id="wishlistItems">
+            <div class="empty-wish-msg"><i class="far fa-heart"></i>
+                <p>Chưa có sản phẩm yêu thích</p>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+    <!-- HEADER (giống index) -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><img src="assets/images/logo/logo.png" alt="F1 Store Logo"></a>
+            <input type="text" class="search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+            <nav class="nav">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="team.html" class="nav-link">Sản phẩm</a>
+                <a href="news.html" class="nav-link">Tin tức</a>
+                <a href="contact.html" class="nav-link">Liên hệ</a>
+                <div class="user-actions">
+                    <button class="icon-btn" onclick="window.location.href='login.html'"><i
+                            class="fas fa-user"></i></button>
+                    <button class="icon-btn" onclick="openWishlistPanel()"><i class="far fa-heart"></i><span
+                            class="wishlist-count" id="wishlistCount">0</span></button>
+                    <button class="icon-btn cart-btn" onclick="openCartSidebar()"><i
+                            class="fas fa-shopping-cart"></i><span class="cart-count" id="cart-count">0</span></button>
+                </div>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV DRAWER -->
+    <nav class="mobile-nav" id="mobileNav">
+        <input type="text" class="mobile-search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="team.html" class="nav-link">Sản phẩm</a>
+        <a href="news.html" class="nav-link">Tin tức</a>
+        <a href="contact.html" class="nav-link">Liên hệ</a>
+    </nav>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="page-layout" style="display:block; max-width:1400px; margin:0 auto; padding:0 var(--pad);">
+        <h1 class="page-title">📰 Tin tức Formula 1</h1>
+        <div class="news-grid" id="newsGrid"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col about">
+                <h4>F1 STORE</h4>
+                <p>Cửa hàng chính thức cung cấp merchandise Formula 1 tại Việt Nam.</p>
+                <div class="socials"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i
+                            class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a
+                        href="#"><i class="fab fa-tiktok"></i></a></div>
+            </div>
+            <div class="footer-col links">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Điều khoản dịch vụ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-info">
+                <h4>LIÊN HỆ</h4>
+                <p><i class="fas fa-envelope"></i> <a
+                        href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> 0832 127 162</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 F1 Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-chevron-up"></i></button>
+
+    <script src="data/teams.js"></script>
+    <script src="data/categories.js"></script>
+    <script src="data/products.js"></script>
+    <script src="data/news.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/news.js"></script>
+</body>
+
+</html>

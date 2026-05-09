@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ — F1 Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .contact-wrapper {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 var(--pad);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .contact-info,
+        .contact-form {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid rgba(225, 6, 0, 0.2);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: #ccc;
+        }
+
+        .info-item i {
+            width: 40px;
+            height: 40px;
+            background: rgba(225, 6, 0, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .btn-submit {
+            background: linear-gradient(90deg, var(--red), #ff4444);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .page-title {
+            margin: 2rem 0 1rem;
+            font-size: 1.8rem;
+            border-left: 4px solid var(--red);
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- CART SIDEBAR (giống index) -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> GIỎ HÀNG CỦA BẠN</h3>
+            <span class="close-cart" id="closeCart">&times;</span>
+        </div>
+        <div class="cart-body" id="cartItems">
+            <div class="empty-cart-msg">Giỏ hàng trống. Hãy chọn xe đua của bạn!</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total"><span>TỔNG CỘNG:</span><span id="cartTotalValue">0₫</span></div>
+            <button class="btn-checkout">THANH TOÁN NGAY</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- WISHLIST PANEL -->
+    <div class="wishlist-panel" id="wishlistPanel">
+        <div class="wishlist-header">
+            <h3><i class="fas fa-heart"></i> SẢN PHẨM YÊU THÍCH</h3>
+            <span class="close-wishlist" id="closeWishlist">&times;</span>
+        </div>
+        <div class="wishlist-body" id="wishlistItems">
+            <div class="empty-wish-msg"><i class="far fa-heart"></i>
+                <p>Chưa có sản phẩm yêu thích</p>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist-overlay" id="wishlistOverlay"></div>
+
+    <!-- HEADER (giống index) -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="logo"><img src="assets/images/logo/logo.png" alt="F1 Store Logo"></a>
+            <input type="text" class="search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+            <nav class="nav" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="team.html" class="nav-link">Sản phẩm</a>
+                <a href="team.html" class="nav-link">Đội đua</a>
+                <a href="news.html" class="nav-link">Tin tức</a>
+                <a href="contact.html" class="nav-link">Liên hệ</a>
+                <div class="user-actions">
+                    <button class="icon-btn" onclick="window.location.href='login.html'"><i
+                            class="fas fa-user"></i></button>
+                    <button class="icon-btn" onclick="openWishlistPanel()"><i class="far fa-heart"></i><span
+                            class="wishlist-count" id="wishlistCount">0</span></button>
+                    <button class="icon-btn cart-btn" onclick="openCartSidebar()"><i
+                            class="fas fa-shopping-cart"></i><span class="cart-count" id="cart-count">0</span></button>
+                </div>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu di động"><i
+                    class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- MOBILE NAV DRAWER -->
+    <nav class="mobile-nav" id="mobileNav">
+        <input type="text" class="mobile-search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="team.html" class="nav-link">Sản phẩm</a>
+        <a href="team.html" class="nav-link">Đội đua</a>
+        <a href="news.html" class="nav-link">Tin tức</a>
+        <a href="contact.html" class="nav-link">Liên hệ</a>
+    </nav>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <h1 class="page-title" style="max-width:1200px; margin:0 auto; padding:0 var(--pad);">📞 Liên hệ với F1 Store</h1>
+    <div class="contact-wrapper">
+        <div class="contact-info">
+            <h3><i class="fas fa-store"></i> Thông tin cửa hàng</h3>
+            <div class="info-item"><i class="fas fa-map-marker-alt"></i>
+                <p>123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+            <div class="info-item"><i class="fas fa-phone"></i>
+                <p><a href="tel:0832127162">0832 127 162</a></p>
+            </div>
+            <div class="info-item"><i class="fas fa-envelope"></i>
+                <p><a href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
+            </div>
+            <div class="info-item"><i class="fas fa-clock"></i>
+                <p>Thứ 2 - Thứ 7: 9:00 - 21:00<br>Chủ nhật: 10:00 - 18:00</p>
+            </div>
+        </div>
+        <div class="contact-form">
+            <h3><i class="fas fa-paper-plane"></i> Gửi tin nhắn</h3>
+            <form id="contactForm">
+                <div class="form-group"><input type="text" id="fullname" placeholder="Họ và tên *" required></div>
+                <div class="form-group"><input type="email" id="email" placeholder="Email *" required></div>
+                <div class="form-group"><input type="tel" id="phone" placeholder="Số điện thoại"></div>
+                <div class="form-group"><textarea id="message" placeholder="Nội dung tin nhắn *" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">GỬI TIN NHẮN <i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="map-container" style="max-width:1200px; margin:2rem auto; padding:0 var(--pad);">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.425728084861!2d106.700256!3d10.776889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3b5c1e5d5b%3A0x8c4e8b5c1e5d5b!2zMTIzIE5ndXnhu4VuIEh14buHLCBQaMaw4budbmcgMSwgUmnDrXRlcywgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s"
+            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-col about">
+                <h4>F1 STORE</h4>
+                <p>Cửa hàng chính thức cung cấp merchandise Formula 1 tại Việt Nam.</p>
+                <div class="socials"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i
+                            class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a
+                        href="#"><i class="fab fa-tiktok"></i></a></div>
+            </div>
+            <div class="footer-col links">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Điều khoản dịch vụ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-info">
+                <h4>LIÊN HỆ</h4>
+                <p><i class="fas fa-envelope"></i> <a
+                        href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
+                <p><i class="fas fa-phone"></i> 0832 127 162</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 F1 Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <button class="scroll-top" id="scrollTop" title="Lên đầu trang"><i class="fas fa-chevron-up"></i></button>
+
+    <script src="data/teams.js"></script>
+    <script src="data/categories.js"></script>
+    <script src="data/products.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+
+</html>

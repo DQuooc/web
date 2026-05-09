@@ -11,22 +11,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+    <!-- CART SIDEBAR -->
     <div class="cart-sidebar" id="cartSidebar">
         <div class="cart-header">
             <h3><i class="fas fa-shopping-cart"></i> GIỎ HÀNG CỦA BẠN</h3>
             <span class="close-cart" id="closeCart">&times;</span>
         </div>
-
         <div class="cart-body" id="cartItems">
             <div class="empty-cart-msg">Giỏ hàng trống. Hãy chọn xe đua của bạn!</div>
         </div>
-
         <div class="cart-footer">
             <div class="cart-total">
                 <span>TỔNG CỘNG:</span>
@@ -35,7 +33,6 @@
             <button class="btn-checkout">THANH TOÁN NGAY</button>
         </div>
     </div>
-
     <div class="cart-overlay" id="cartOverlay"></div>
 
     <!-- WISHLIST PANEL -->
@@ -56,27 +53,27 @@
     <header class="header">
         <div class="header-inner">
             <a href="index.html" class="logo">
-                <img src="anh/logo.png" alt="F1 Store Logo">
+                <img src="assets/images/logo/logo.png" alt="F1 Store Logo">
             </a>
-            <input type="text" class="search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
+            <input type="text" class="search" placeholder="Tìm kiếm...">
 
             <nav class="nav" aria-label="Main navigation">
-                <a href="#" class="nav-link">Trang chủ</a>
-                <a href="#" class="nav-link">Sản phẩm</a>
-                <a href="#" class="nav-link">Đội đua</a>
-                <a href="#" class="nav-link">Tin tức</a>
-                <a href="#" class="nav-link">Liên hệ</a>
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="team.html" class="nav-link">Sản phẩm</a>
+                <a href="news.html" class="nav-link">Tin tức</a>
+                <a href="contact.html" class="nav-link">Liên hệ</a>
 
                 <div class="user-actions">
                     <button class="icon-btn" onclick="window.location.href='login.html'">
                         <i class="fas fa-user"></i>
                     </button>
-
-                    <button class="icon-btn" aria-label="Yêu thích" id="wishlistBtn">
+                    <!-- Yêu thích: mở wishlist panel -->
+                    <button class="icon-btn" onclick="openWishlistPanel()">
                         <i class="far fa-heart"></i>
                         <span class="wishlist-count" id="wishlistCount">0</span>
                     </button>
-                    <button class="icon-btn cart-btn" aria-label="Giỏ hàng">
+                    <!-- Giỏ hàng: mở cart sidebar -->
+                    <button class="icon-btn cart-btn" onclick="openCartSidebar()">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="cart-count" id="cart-count">0</span>
                     </button>
@@ -92,11 +89,10 @@
     <!-- MOBILE NAV DRAWER -->
     <nav class="mobile-nav" id="mobileNav">
         <input type="text" class="mobile-search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
-        <a href="#" class="nav-link">Trang chủ</a>
-        <a href="#" class="nav-link">Sản phẩm</a>
-        <a href="#" class="nav-link">Đội đua</a>
-        <a href="#" class="nav-link">Tin tức</a>
-        <a href="#" class="nav-link">Liên hệ</a>
+        <a href="index.html" class="nav-link">Trang chủ</a>
+        <a href="team.html" class="nav-link">Sản phẩm</a>
+        <a href="news.html" class="nav-link">Tin tức</a>
+        <a href="contact.html" class="nav-link">Liên hệ</a>
     </nav>
 
     <!-- FIXED CONTAINER -->
@@ -111,37 +107,30 @@
                 <div class="menu-group">
                     <div class="menu-main">Mô hình F1 LEGO <i class="fas fa-chevron-down"></i></div>
                     <ul class="submenu">
-                        <li><a href="#">Bộ lắp ráp xe F1</a></li>
-                        <li><a href="#">LEGO Speed Champions</a></li>
-                        <li><a href="#">LEGO Technic F1</a></li>
+                        <li><a href="team.html?category=lego-speed">LEGO Speed Champions</a></li>
+                        <li><a href="team.html?category=lego-technic">LEGO Technic F1</a></li>
                     </ul>
                 </div>
 
                 <div class="menu-group">
                     <div class="menu-main">Mô hình tỷ lệ <i class="fas fa-chevron-down"></i></div>
                     <ul class="submenu">
-                        <li><a href="#">Tỷ lệ 1:18</a></li>
-                        <li><a href="#">Tỷ lệ 1:24</a></li>
-                        <li><a href="#">Tỷ lệ 1:43</a></li>
-                        <li><a href="#">Tỷ lệ 1:64</a></li>
+                        <li><a href="team.html?category=scale-118">Tỷ lệ 1:18</a></li>
+                        <li><a href="team.html?category=scale-143">Tỷ lệ 1:43</a></li>
                     </ul>
                 </div>
 
                 <div class="menu-group">
                     <div class="menu-main">Thời trang & Phụ kiện <i class="fas fa-chevron-down"></i></div>
                     <ul class="submenu">
-                        <li><a href="#">Áo đội đua</a></li>
-                        <li><a href="#">Mũ & Nón</a></li>
-                        <li><a href="#">Áo Hoodie</a></li>
-                        <li><a href="#">Phụ kiện khác</a></li>
+                        <li><a href="team.html?category=fashion">Áo & Mũ & Phụ kiện</a></li>
                     </ul>
                 </div>
 
                 <div class="menu-group">
                     <div class="menu-main">Đồ sưu tầm đặc biệt <i class="fas fa-chevron-down"></i></div>
                     <ul class="submenu">
-                        <li><a href="#">Limited Edition</a></li>
-                        <li><a href="#">Kỷ niệm tay đua</a></li>
+                        <li><a href="team.html?category=limited">Limited Edition</a></li>
                     </ul>
                 </div>
             </nav>
@@ -165,11 +154,7 @@
             <div class="sidebar-contact">
                 <h4><i class="fas fa-headset"></i> Hỗ trợ nhanh</h4>
                 <p>Hotline: <strong>0832 127 162</strong></p>
-                <p>Email: <a
-                        href="/cdn-cgi/l/email-protection#0c7a636879757d79636f3e3e3c3e3e3c3c394c6b616d6560226f6361"><span
-                            class="__cf_email__"
-                            data-cfemail="691f060d1c10181c060a5b5b595b5b59595c290e04080005470a0604">dquooc.eng.cybersec@gmail.com</span></a>
-                </p>
+                <p>Email: <a href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
             </div>
         </aside>
 
@@ -180,7 +165,7 @@
             <section class="hero-banner">
                 <div class="banner-video">
                     <video autoplay loop muted playsinline>
-                        <source src="anh/vid2.mp4" type="video/mp4">
+                        <source src="assets/videos/vid2.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="banner-content">
@@ -198,294 +183,72 @@
                     <a href="#" class="view-all">Xem tất cả →</a>
                 </div>
                 <div class="team-grid">
-                    <a href="#" class="team-item"><img src="anh/1.jpg" alt="Ferrari"></a>
-                    <a href="#" class="team-item"><img src="anh/2.jpg" alt="Mercedes"></a>
-                    <a href="#" class="team-item"><img src="anh/3.jpg" alt="Red Bull"></a>
-                    <a href="#" class="team-item"><img src="anh/4.jpg" alt="McLaren"></a>
-                    <a href="#" class="team-item"><img src="anh/5.jpg" alt="Aston Martin"></a>
-                    <a href="#" class="team-item"><img src="anh/6.jpg" alt="Alpine"></a>
-                    <a href="#" class="team-item"><img src="anh/7.jpg" alt="Williams"></a>
-                    <a href="#" class="team-item"><img src="anh/8.jpg" alt="RB"></a>
-                    <a href="#" class="team-item"><img src="anh/9.jpg" alt="Sauber"></a>
-                    <a href="#" class="team-item"><img src="anh/10.jpg" alt="Haas"></a>
-                    <a href="#" class="team-item"><img src="anh/11.jpg" alt="Audi"></a>
-                    <a href="#" class="team-item"><img src="anh/12.jpg" alt="Andretti"></a>
+                    <a href="team.html?team=redbull" class="team-item" title="Red Bull"><img
+                            src="assets/images/logo/1.jpg" alt="Red Bull"></a>
+                    <a href="team.html?team=ferrari" class="team-item" title="Ferrari"><img
+                            src="assets/images/logo/2.jpg" alt="Ferrari"></a>
+                    <a href="team.html?team=mercedes" class="team-item" title="Mercedes-AMG"><img
+                            src="assets/images/logo/3.jpg" alt="Mercedes"></a>
+
+                    <a href="team.html?team=mclaren" class="team-item" title="McLaren"><img
+                            src="assets/images/logo/4.jpg" alt="McLaren"></a>
+                    <a href="team.html?team=astonmartin" class="team-item" title="Aston Martin"><img
+                            src="assets/images/logo/5.jpg" alt="Aston Martin"></a>
+                    <a href="team.html?team=haas" class="team-item" title="Haas"><img src="assets/images/logo/6.jpg"
+                            alt="Haas"></a>
+                    <a href="team.html?team=rb" class="team-item" title="RB"><img src="assets/images/logo/7.jpg"
+                            alt="RB"></a>
+                    <a href="team.html?team=alpine" class="team-item" title="Alpine"><img src="assets/images/logo/8.jpg"
+                            alt="Alpine"></a>
+                    <a href="team.html?team=williams" class="team-item" title="Williams"><img
+                            src="assets/images/logo/9.jpg" alt="Williams"></a>
+
+                    <a href="team.html?team=audi" class="team-item" title="Audi"><img src="assets/images/logo/10.jpg"
+                            alt="Audi"></a>
+                    <a href="team.html?team=cadilac" class="team-item" title="Cadillac"><img
+                            src="assets/images/logo/11.jpg" alt="Cadillac"></a>
+                    <a href="team.html?team=sauber" class="team-item" title="Sauber"><img
+                            src="assets/images/logo/12.jpg" alt="Sauber"></a>
                 </div>
             </section>
 
-            <!-- SẢN PHẨM MỚI NHẤT - SLIDER 4 thẻ, bấm nút để cuộn -->
+            <!-- SẢN PHẨM MỚI NHẤT - SLIDER (đã thêm id) -->
             <section class="section">
                 <div class="section-header">
                     <h3>SẢN PHẨM MỚI NHẤT</h3>
                     <a href="#" class="view-all">Xem tất cả →</a>
                 </div>
-
                 <div class="slider-section">
                     <button class="slider-btn btn-prev" aria-label="Trước"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-btn btn-next" aria-label="Sau"><i class="fas fa-chevron-right"></i></button>
-
                     <div class="slider-viewport">
-                        <div class="slider-track">
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                                <span class="badge new">NEW</span>
-                                <div class="img-container">
-                                    <img src="anh/lego/redbull/speed1.png" alt="RB20">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">RED BULL</p>
-                                <h4>Xe đua F1® Oracle Red Bull Racing RB20</h4>
-                                <div class="price-row">
-                                    <span class="price">699.000₫</span>
-                                    <div class="btn-row"><button class="btn-add-cart"
-                                            onclick="addToCart('Red Bull RB20', 699000, 'anh/lego/redbull/speed1.png')">
-                                            Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                        </button><button class="btn-wish-inline"
-                                            onclick="toggleWishlistInline(this, 'Red Bull RB20', 699000, 'anh/lego/redbull/speed1.png')"><i
-                                                class="far fa-heart"></i></button></div>
-                                </div>
-                            </div>
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                                <span class="badge new">NEW</span>
-                                <div class="img-container">
-                                    <img src="https://www.lego.com/cdn/cs/set/assets/bltaefe7da97d921e16/77251_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
-                                        alt="McLAREN MCL38">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">McLAREN</p>
-                                <h4>Xe đua McLaren F1® Team MCL38</h4>
-                                <div class="price-row">
-                                    <span class="price">699.000₫</span>
-                                    <div class="btn-row"><button class="btn-add-cart"
-                                            onclick="addToCart('McLAREN MCL38', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltaefe7da97d921e16/77251_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
-                                            Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                        </button><button class="btn-wish-inline"
-                                            onclick="toggleWishlistInline(this, 'McLAREN MCL38', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltaefe7da97d921e16/77251_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')"><i
-                                                class="far fa-heart"></i></button></div>
-                                </div>
-                            </div>
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                                <span class="badge new">NEW</span>
-                                <div class="img-container">
-                                    <img src="https://www.lego.com/cdn/cs/set/assets/bltdebbd34296f1ce78/77244_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
-                                        alt="MERCEDES-AMG">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">MERCEDES-AMG</p>
-                                <h4>Xe đua Mercedes-AMG F1® W15</h4>
-                                <div class="price-row">
-                                    <span class="price">699.000₫</span>
-                                    <div class="btn-row"><button class="btn-add-cart"
-                                            onclick="addToCart('MERCEDES-AMG W15', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltdebbd34296f1ce78/77244_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
-                                            Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                        </button><button class="btn-wish-inline"
-                                            onclick="toggleWishlistInline(this, 'MERCEDES-AMG W15', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltdebbd34296f1ce78/77244_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')"><i
-                                                class="far fa-heart"></i></button></div>
-                                </div>
-                            </div>
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer"
-                                data-specs="[[&quot;Mã SP&quot;, &quot;77242&quot;], [&quot;Tỷ lệ&quot;, &quot;1:17 Speed Champions&quot;], [&quot;Số mảnh&quot;, &quot;239 mảnh&quot;], [&quot;Tay đua&quot;, &quot;Charles Leclerc&quot;], [&quot;Năm&quot;, &quot;2024&quot;]]"
-                                data-desc="Ferrari SF-24 trong thiết kế đỏ rực đặc trưng Scuderia Ferrari. Bộ lắp ráp LEGO chính hãng 239 mảnh, kèm mini-figure Leclerc và vô lăng tháo rời."
-                                data-rating="4.9" data-reviews="143" data-badge="new">
-                                <span class="badge new">NEW</span>
-                                <div class="img-container">
-                                    <img src="https://www.lego.com/cdn/cs/set/assets/bltd193d7c8cfbfc4cd/77242_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
-                                        alt="SF24">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">FERRARI</p>
-                                <h4>Xe đua F1® Ferrari SF-24</h4>
-                                <div class="price-row">
-                                    <span class="price">699.000₫</span>
-                                    <div class="btn-row"><button class="btn-add-cart"
-                                            onclick="addToCart('FERRARI SF-24', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltd193d7c8cfbfc4cd/77242_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
-                                            Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                        </button><button class="btn-wish-inline"
-                                            onclick="toggleWishlistInline(this, 'FERRARI SF-24', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltd193d7c8cfbfc4cd/77242_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')"><i
-                                                class="far fa-heart"></i></button></div>
-                                </div>
-                            </div>
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                                <span class="badge new">NEW</span>
-                                <div class="img-container">
-                                    <img src="https://www.lego.com/cdn/cs/set/assets/bltabd8d686bcca8fca/blt480f8e3525715603-77259_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
-                                        alt="R26">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">AUDI</p>
-                                <h4>Xe đua Audi Revolut F1® Team R26</h4>
-                                <div class="price-row">
-                                    <span class="price">699.000₫</span>
-                                    <div class="btn-row"><button class="btn-add-cart"
-                                            onclick="addToCart('AUDI R26', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltabd8d686bcca8fca/blt480f8e3525715603-77259_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
-                                            Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                        </button><button class="btn-wish-inline"
-                                            onclick="toggleWishlistInline(this, 'AUDI R26', 699000, 'https://www.lego.com/cdn/cs/set/assets/bltabd8d686bcca8fca/blt480f8e3525715603-77259_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')"><i
-                                                class="far fa-heart"></i></button></div>
-                                </div>
-                            </div>
-
-                        </div><!-- /slider-track -->
-                    </div><!-- /slider-viewport -->
-                </div><!-- /slider-section -->
+                        <div class="slider-track" id="newProductsTrack"></div>
+                    </div>
+                </div>
             </section>
 
-            <!-- SẢN PHẨM ĐANG GIẢM GIÁ - SLIDER -->
+            <!-- SẢN PHẨM ĐANG GIẢM GIÁ - SLIDER (đã thêm id) -->
             <section class="section">
                 <div class="section-header">
                     <h3><i class="fas fa-fire" style="color:#ff4d4d"></i> SẢN PHẨM ĐANG GIẢM GIÁ</h3>
                     <a href="#" class="view-all">Xem tất cả →</a>
                 </div>
-
                 <div class="slider-section">
                     <button class="slider-btn btn-prev" aria-label="Trước"><i class="fas fa-chevron-left"></i></button>
                     <button class="slider-btn btn-next" aria-label="Sau"><i class="fas fa-chevron-right"></i></button>
-
                     <div class="slider-viewport">
-                        <div class="slider-track">
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer"
-                                data-specs="[[&quot;Mã SP&quot;, &quot;42228&quot;], [&quot;Tỷ lệ&quot;, &quot;1:8 Technic&quot;], [&quot;Số mảnh&quot;, &quot;1.432 mảnh&quot;], [&quot;Tay đua&quot;, &quot;Norris / Piastri&quot;], [&quot;Chiều dài&quot;, &quot;58 cm&quot;]]"
-                                data-desc="LEGO Technic McLaren MCL39 tỷ lệ 1:8 — siêu mô hình 1.432 mảnh, động cơ V6 hybrid chuyển động, hộp số 8 cấp và cánh DRS điều chỉnh được. Trưng bày đẳng cấp."
-                                data-rating="4.9" data-reviews="209" data-badge="sale">
-                                <span class="badge sale">SALE -20%</span>
-                                <div class="img-container">
-                                    <img src="https://www.lego.com/cdn/cs/set/assets/blt4d73eeeba610152c/blt94fedcc1daf48b2a-42228_boxprod_v39_en-us.png?format=webply&fit=bounds&quality=70&width=1200&height=1200&dpr=1.5"
-                                        alt="MCL39">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">McLAREN</p>
-                                <h4>Xe đua F1® McLaren MCL39</h4>
-                                <div class="price-row-sale">
-                                    <div class="price-group">
-                                        <span class="old-price">7.750.000₫</span>
-                                        <span class="price">6.200.000₫</span>
-                                    </div>
-                                    <button class="btn-add-cart"
-                                        onclick="addToCart('McLaren MCL39', 6200000, 'https://www.lego.com/cdn/cs/set/assets/blt4d73eeeba610152c/blt94fedcc1daf48b2a-42228_boxprod_v39_en-us.png?format=webply&fit=bounds&quality=70&width=1200&height=1200&dpr=1.5')">
-                                        <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer"
-                                data-specs="[[&quot;Mã SP&quot;, &quot;76925&quot;], [&quot;Tỷ lệ&quot;, &quot;1:17 Speed Champions&quot;], [&quot;Số mảnh&quot;, &quot;238 mảnh&quot;], [&quot;Tay đua&quot;, &quot;Max Verstappen&quot;], [&quot;Năm&quot;, &quot;2024&quot;]]"
-                                data-desc="Mô hình LEGO Speed Champions chính hãng. Tái hiện chiếc xe Oracle Red Bull Racing RB20 — cỗ máy vô địch của Max Verstappen mùa 2024. Gồm 238 mảnh, kèm mini-figure tay đua."
-                                data-rating="4.8" data-reviews="127" data-badge="new">
-                                <span class="badge sale">-15%</span>
-                                <div class="img-container">
-                                    <img src="https://www.lego.com/cdn/cs/set/assets/blt2847611d46bfd9e7/42206_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5"
-                                        alt="Red Bull RB20">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">RED BULL</p>
-                                <h4>Red Bull RB20 1:8 Scale</h4>
-                                <div class="price-row-sale">
-                                    <div class="price-group">
-                                        <span class="old-price">5.000.000₫</span>
-                                        <span class="price">4.250.000₫</span>
-                                    </div>
-                                    <button class="btn-add-cart"
-                                        onclick="addToCart('Red Bull RB20 1:8', 4250000, 'https://www.lego.com/cdn/cs/set/assets/blt2847611d46bfd9e7/42206_boxprod_v39_en-gb.png?format=webply&fit=bounds&quality=70&width=800&height=800&dpr=1.5')">
-                                        <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                                <span class="badge sale">SALE</span>
-                                <div class="img-container">
-                                    <img src="anh/lego/redbull/speed1.png" alt="RB20">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                            class="far fa-heart"></i></button>
-
-                                </div>
-                                <p class="brand">RED BULL</p>
-                                <h4>Xe đua F1® Oracle Red Bull Racing RB20</h4>
-                                <div class="price-row">
-                                    <span class="price">699.000₫</span>
-                                    <div class="btn-row"><button class="btn-add-cart"
-                                            onclick="addToCart('Red Bull RB20', 699000, 'anh/lego/redbull/speed1.png')">
-                                            Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                        </button><button class="btn-wish-inline"
-                                            onclick="toggleWishlistInline(this, 'Red Bull RB20', 699000, 'anh/lego/redbull/speed1.png')"><i
-                                                class="far fa-heart"></i></button></div>
-                                </div>
-                            </div>
-
-                        </div><!-- /slider-track -->
-                    </div><!-- /slider-viewport -->
-                </div><!-- /slider-section -->
+                        <div class="slider-track" id="saleProductsTrack"></div>
+                    </div>
+                </div>
             </section>
 
-            <!-- SẢN PHẨM NỔI BẬT - LƯỚI TĨNH 4 CỘT -->
+            <!-- SẢN PHẨM NỔI BẬT - GRID -->
             <section class="section">
                 <div class="section-header">
                     <h3>SẢN PHẨM NỔI BẬT</h3>
                     <a href="#" class="view-all">Xem tất cả →</a>
                 </div>
-                <div class="product-grid-static">
-                    <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                        <span class="badge hot">HOT</span>
-                        <div class="img-container">
-                            <img src="https://via.placeholder.com/600x420/111/fff?text=Ferrari+Hoodie"
-                                alt="Ferrari Hoodie">
-                            <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                    class="far fa-heart"></i></button>
-
-                        </div>
-                        <p class="brand">FERRARI</p>
-                        <h4>Ferrari Official Hoodie 2026</h4>
-                        <div class="price-row">
-                            <span class="price">1.890.000₫</span>
-                            <div class="btn-row"><button class="btn-add-cart"
-                                    onclick="addToCart('Ferrari Hoodie', 1890000, 'https://via.placeholder.com/600x420/111/fff?text=Ferrari+Hoodie')">
-                                    Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                </button><button class="btn-wish-inline"
-                                    onclick="toggleWishlistInline(this, 'Ferrari Hoodie', 1890000, 'https://via.placeholder.com/600x420/111/fff?text=Ferrari+Hoodie')"><i
-                                        class="far fa-heart"></i></button></div>
-                        </div>
-                    </div>
-
-                    <div class="product-card" onclick="openProductModal(this)" style="cursor:pointer">
-                        <span class="badge hot">HOT</span>
-                        <div class="img-container">
-                            <img src="https://via.placeholder.com/600x420/111/fff?text=McLaren+Cap" alt="McLaren Cap">
-                            <button class="btn-wishlist" onclick="toggleWishlist(this)"><i
-                                    class="far fa-heart"></i></button>
-
-                        </div>
-                        <p class="brand">MCLAREN</p>
-                        <h4>McLaren Team Cap</h4>
-                        <div class="price-row">
-                            <span class="price">850.000₫</span>
-                            <div class="btn-row"><button class="btn-add-cart"
-                                    onclick="addToCart('McLaren Cap', 850000, 'https://via.placeholder.com/600x420/111/fff?text=McLaren+Cap')">
-                                    Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
-                                </button><button class="btn-wish-inline"
-                                    onclick="toggleWishlistInline(this, 'McLaren Cap', 850000, 'https://via.placeholder.com/600x420/111/fff?text=McLaren+Cap')"><i
-                                        class="far fa-heart"></i></button></div>
-                        </div>
-                    </div>
-                </div>
+                <div class="product-grid-static" id="featuredProductsGrid"></div>
             </section>
 
             <!-- NEWSLETTER -->
@@ -564,27 +327,22 @@
 
             <div class="footer-col contact-info">
                 <h4>LIÊN HỆ</h4>
-                <p><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                        data-cfemail="f5839a91808c84809a96c7c7c5c7c7c5c5c0b59298949c99db969a98">dquooc.eng.cybersec@gmail.com</a>
-                </p>
+                <p><i class="fas fa-envelope"></i> <a
+                        href="mailto:dquooc.eng.cybersec@gmail.com">dquooc.eng.cybersec@gmail.com</a></p>
                 <p><i class="fas fa-phone"></i> 0832 127 162</p>
                 <p><i class="fas fa-map-marker-alt"></i> 123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh</p>
             </div>
-
-
         </div>
         <div class="footer-bottom">
             <p>&copy; 2026 F1 Store. All rights reserved.</p>
         </div>
     </footer>
 
-
     <!-- MODAL CHI TIẾT SẢN PHẨM -->
     <div class="product-modal-overlay" id="productModalOverlay" onclick="closeProductModal(event)">
         <div class="product-modal" id="productModal">
             <button class="pm-close" onclick="closeProductModalDirect()"><i class="fas fa-times"></i></button>
             <div class="product-modal-body">
-                <!-- Cột trái: thông tin sản phẩm -->
                 <div class="pm-info">
                     <div id="pmBadge" class="pm-badge" style="display:none"></div>
                     <p class="pm-brand" id="pmBrand">BRAND</p>
@@ -607,15 +365,12 @@
                         </div>
                     </div>
                     <div class="pm-actions">
-                        <button class="pm-btn-cart" id="pmBtnCart">
-                            <i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng
-                        </button>
-                        <button class="pm-btn-wish" id="pmBtnWish" onclick="pmToggleWish()">
-                            <i class="far fa-heart"></i>
-                        </button>
+                        <button class="pm-btn-cart" id="pmBtnCart"><i class="fas fa-shopping-cart"></i> Thêm vào
+                            giỏ</button>
+                        <button class="pm-btn-wish" id="pmBtnWish" onclick="pmToggleWish()"><i
+                                class="far fa-heart"></i></button>
                     </div>
                 </div>
-                <!-- Cột phải: ảnh sản phẩm -->
                 <div class="pm-gallery">
                     <img id="pmImg" src="" alt="">
                 </div>
@@ -623,9 +378,46 @@
         </div>
     </div>
 
+    <!-- SCRIPTS -->
+    <script src="data/teams.js"></script>
+    <script src="data/categories.js"></script>
+    <script src="data/products.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
 
-    <script src="script.js"></script>
+    <!-- SCRIPT RENDER SẢN PHẨM ĐỘNG -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. Sản phẩm mới nhất (lấy 4 sản phẩm có id lớn nhất)
+            const newestProducts = [...PRODUCTS].sort((a, b) => b.id - a.id).slice(0, 4);
+            const newTrack = document.getElementById('newProductsTrack');
+            if (newTrack && newestProducts.length) {
+                newTrack.innerHTML = newestProducts.map(p => renderProductCard(p, { showWishlistBtn: true, showCartBtn: true })).join('');
+            }
 
+            // 2. Sản phẩm giảm giá (có oldPrice !== null)
+            const saleProducts = PRODUCTS.filter(p => p.oldPrice !== null).slice(0, 4);
+            const saleTrack = document.getElementById('saleProductsTrack');
+            if (saleTrack && saleProducts.length) {
+                saleTrack.innerHTML = saleProducts.map(p => renderProductCard(p, { showWishlistBtn: true, showCartBtn: true })).join('');
+            }
+
+            // 3. Sản phẩm nổi bật (badge === 'hot')
+            const hotProducts = PRODUCTS.filter(p => p.badge === 'hot').slice(0, 4);
+            const featuredGrid = document.getElementById('featuredProductsGrid');
+            if (featuredGrid && hotProducts.length) {
+                featuredGrid.innerHTML = hotProducts.map(p => renderProductCard(p, { showWishlistBtn: true, showCartBtn: true })).join('');
+            }
+
+            // 4. Khởi tạo lại slider cho các section vừa thêm sản phẩm
+            document.querySelectorAll('.slider-section').forEach(section => {
+                // Thử gọi hàm initSlider từ main.js (nếu có)
+                if (typeof initSlider === 'function') {
+                    initSlider(section);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

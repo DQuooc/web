@@ -65,6 +65,33 @@
                 margin-top: 0;
             }
         }
+
+        /* ── Accordion danh mục sidebar ── */
+        .category-menu .submenu {
+            display: none !important;
+            list-style: none;
+            padding: 0.25rem 0 0.25rem 1rem;
+            margin: 0;
+        }
+
+        .category-menu .menu-group.active .submenu {
+            display: block !important;
+        }
+
+        /* Xoay icon mũi tên khi mở */
+        .category-menu .menu-group.active .menu-main .fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .category-menu .menu-main .fa-chevron-down {
+            transition: transform 0.25s ease;
+            float: right;
+        }
+
+        .category-menu .menu-main {
+            cursor: pointer;
+            user-select: none;
+        }
     </style>
 </head>
 
@@ -147,7 +174,7 @@
     <nav class="mobile-nav" id="mobileNav">
         <input type="text" class="mobile-search" placeholder="Tìm kiếm mô hình, áo đấu, mũ...">
         <a href="index.html" class="nav-link">Trang chủ</a>
-        <a href="team.html" class="nav-link">Sản phẩm</a>        <a href="news.html" class="nav-link">Tin tức</a>
+        <a href="team.html" class="nav-link">Sản phẩm</a> <a href="news.html" class="nav-link">Tin tức</a>
         <a href="contact.html" class="nav-link">Liên hệ</a>
     </nav>
     <div class="page-layout">
@@ -318,6 +345,33 @@
     <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
     <script src="js/team.js"></script>
+
+    <!-- Accordion sidebar — chạy sau tất cả script khác, độc lập hoàn toàn -->
+    <script>
+        (function () {
+            function initAccordion() {
+                document.querySelectorAll('.category-menu .menu-main').forEach(function (btn) {
+                    // Clone để xóa toàn bộ listener cũ có thể bị gắn sai từ main.js / team.js
+                    var newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    newBtn.addEventListener('click', function () {
+                        var group = newBtn.closest('.menu-group');
+                        var isActive = group.classList.contains('active');
+                        document.querySelectorAll('.category-menu .menu-group').forEach(function (g) {
+                            g.classList.remove('active');
+                        });
+                        if (!isActive) group.classList.add('active');
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initAccordion);
+            } else {
+                initAccordion();
+            }
+        })();
+    </script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-// js/team.js - Lọc danh mục (sidebar trái) + đội đua (thanh ngang) + search + sort + giá
+// js/team.js - Sửa lỗi click danh mục sidebar trái
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof PRODUCTS === 'undefined') {
         document.getElementById('productGrid').innerHTML = '<div class="no-results">Lỗi dữ liệu sản phẩm</div>';
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (typeof syncAllWishlistButtons === 'function') syncAllWishlistButtons();
     }
 
-    // Render thanh đội đua (ngang, có thể scroll)
+    // Render thanh đội đua
     function renderTeamTabs() {
         if (!teamTabs) return;
         const teams = window.TEAMS || [];
@@ -73,34 +73,43 @@ document.addEventListener('DOMContentLoaded', function() {
             html += `<div class="team-tab ${currentTeam === t.id ? 'active' : ''}" data-team="${t.id}"><img src="${t.logo}" alt="${t.name}"> ${t.name} (${cnt})</div>`;
         });
         teamTabs.innerHTML = html;
-        // Gắn sự kiện click
         document.querySelectorAll('.team-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const teamId = tab.dataset.team;
                 currentTeam = teamId;
-                currentCategory = 'all'; // reset danh mục khi chọn đội
+                currentCategory = 'all';
                 updateUrl();
                 renderAll();
             });
         });
     }
 
-    // Xử lý click danh mục từ sidebar trái
-    function bindCategoryLinks() {
-        document.querySelectorAll('.submenu a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const catId = link.dataset.category;
-                if (catId) {
-                    currentCategory = catId;
-                    currentTeam = 'all'; // reset đội khi chọn danh mục
-                    updateUrl();
-                    renderAll();
-                    // Cập nhật active style cho danh mục
-                    document.querySelectorAll('.submenu a').forEach(a => a.style.color = '');
-                    link.style.color = 'var(--red)';
-                }
-            });
+    // Hàm xử lý click danh mục
+    function handleCategoryClick(e) {
+        e.preventDefault();
+        const catId = this.dataset.category;
+        if (catId) {
+            currentCategory = catId;
+            currentTeam = 'all';
+            updateUrl();
+            renderAll();
+            // Đánh dấu active
+            document.querySelectorAll('.submenu a').forEach(a => a.style.color = '');
+            this.style.color = 'var(--red)';
+        }
+    }
+
+    // Gắn sự kiện cho các link danh mục (gọi sau mỗi lần render nếu cần, nhưng các link này tĩnh nên chỉ gắn một lần)
+    function initCategoryLinks() {
+        const categoryLinks = document.querySelectorAll('.submenu a');
+        categoryLinks.forEach(link => {
+            link.removeEventListener('click', handleCategoryClick);
+            link.addEventListener('click', handleCategoryClick);
+        });
+        // Đánh dấu active ban đầu
+        document.querySelectorAll('.submenu a').forEach(a => {
+            if (a.dataset.category === currentCategory) a.style.color = 'var(--red)';
+            else a.style.color = '';
         });
     }
 
@@ -117,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderAll() {
         renderTeamTabs();
         renderProducts();
-        // Highlight danh mục đang active
+        // Cập nhật active cho danh mục (do render lại có thể thay đổi currentCategory)
         document.querySelectorAll('.submenu a').forEach(a => {
             if (a.dataset.category === currentCategory) a.style.color = 'var(--red)';
             else a.style.color = '';
@@ -162,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Accordion menu cho sidebar (từ main.js)
+    // Accordion menu cho sidebar
     document.querySelectorAll('.menu-main').forEach(btn => {
         btn.addEventListener('click', () => {
             const group = btn.closest('.menu-group');
@@ -172,7 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Mobile filter toggle (nếu có)
+    const filterBtn = document.getElementById('filterToggleBtn');
+    const filterSidebar = document.getElementById('filterSidebar');
+    if (filterBtn && filterSidebar) {
+        filterBtn.addEventListener('click', () => {
+            filterSidebar.classList.toggle('mobile-closed');
+            filterBtn.innerHTML = filterSidebar.classList.contains('mobile-closed')
+                ? '<i class="fas fa-sliders-h"></i> Lọc &amp; Đội đua ▼'
+                : '<i class="fas fa-times"></i> Đóng bộ lọc ▲';
+        });
+    }
+
     // Khởi tạo
     renderAll();
-    bindCategoryLinks();
+    initCategoryLinks();
 });
